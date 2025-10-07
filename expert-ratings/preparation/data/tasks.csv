@@ -1,0 +1,1329 @@
+id,file_path,old_code,old_context,old_start_line,new_code,new_context,new_start_line
+FD-A,"FinanceDashboard/frontend/src/StockChart.jsx","  const formatDateString = (date) => {
+    return date.split(""T"")[0];
+  };","import React from ""react"";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from ""recharts"";
+
+const StockChart = ({ data }) => {
+  if (!data || !data.data || !data.data.length) return null;
+
+  const company = data.name;
+  const ticker = data.ticker;
+
+  const formatDateString = (date) => {
+    return date.split(""T"")[0];
+  };
+
+  // Combine labels and values into an array of objects for Recharts
+  const chartData = data.data.map((item) => ({
+    date: item.date,
+    price: item.close,
+  }));
+
+  return (
+    <div style={{ marginTop: ""2rem"" }}>
+      <h3>
+        {company} ({ticker})
+      </h3>
+      <ResponsiveContainer width=""100%"" height={300}>
+        <LineChart
+          data={chartData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <XAxis dataKey=""date"" />
+          <YAxis domain={[""auto"", ""auto""]} />
+          <Tooltip />
+          <Legend />
+          <Line type=""monotone"" dataKey=""price"" stroke=""#8884d8"" dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+export default StockChart;",19,"  const formatDateString = (date) => {
+    const options = { month: ""short"" };
+    return new Date(date).toLocaleDateString(""en-US"", options);
+  };","import React from ""react"";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from ""recharts"";
+
+const StockChart = ({ data }) => {
+  if (!data || !data.data || !data.data.length) return null;
+
+  const company = data.name;
+  const ticker = data.ticker;
+
+  const formatDateString = (date) => {
+    const options = { month: ""short"" };
+    return new Date(date).toLocaleDateString(""en-US"", options);
+  };
+
+  // Combine labels and values into an array of objects for Recharts
+  const chartData = data.data.map((item) => ({
+    date: item.date,
+    price: item.close,
+  }));
+
+  const currentPrice = data.currentPrice;
+
+  return (
+    <div style={{ marginTop: ""2rem"" }}>
+      <h3>
+        {company} ({ticker})
+      </h3>
+      <ResponsiveContainer width=""100%"" height={300}>
+        <LineChart
+          data={chartData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <XAxis dataKey=""date"" tickFormatter={formatDateString} />
+          <YAxis domain={[""auto"", ""auto""]} />
+          <Tooltip />
+          <Legend />
+          <Line type=""monotone"" dataKey=""price"" stroke=""#8884d8"" dot={false} />
+          <ReferenceLine
+            y={currentPrice}
+            stroke=""red""
+            strokeDasharray=""5 5""
+          />{"" ""}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+export default StockChart;",19
+FD-B,FinanceDashboard/server/index.js,"app.get(""/api/stock/:symbol"", async (req, res) => {
+  try {
+    const symbol = req.params.symbol.toUpperCase();
+    const data = await yahooFinance.chart(symbol, {
+      period1: ""2024-01-01"",
+      interval: ""1d"",
+    });
+    const quotes = data.quotes;
+
+    const companyName = data.meta?.shortName || symbol;
+
+    const response = {
+      ticker: symbol,
+      name: companyName,
+      data: quotes.map((q) => ({
+        date: q.date,
+        close: q.close,
+        volume: q.volume,
+      })),
+    };
+
+    console.log(response);
+    res.json(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(""Error fetching stock data"");
+  }
+});","const express = require(""express"");
+const cors = require(""cors"");
+const yahooFinance = require(""yahoo-finance2"").default;
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+
+app.get(""/api/hello"", (req, res) => {
+  res.json({ message: ""Hello from the backend!"" });
+});
+
+app.get(""/api/stock/:symbol"", async (req, res) => {
+  try {
+    const symbol = req.params.symbol.toUpperCase();
+    const data = await yahooFinance.chart(symbol, {
+      period1: ""2024-01-01"",
+      interval: ""1d"",
+    });
+    const quotes = data.quotes;
+
+    const companyName = data.meta?.shortName || symbol;
+
+    const response = {
+      ticker: symbol,
+      name: companyName,
+      data: quotes.map((q) => ({
+        date: q.date,
+        close: q.close,
+        volume: q.volume,
+      })),
+    };
+
+    console.log(response);
+    res.json(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(""Error fetching stock data"");
+  }
+});
+
+app.listen(PORT, ""0.0.0.0"", () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});",15,"app.get(""/api/stock/:symbol"", async (req, res) => {
+  try {
+    const symbol = req.params.symbol.toUpperCase();
+    const data = await yahooFinance.chart(symbol, {
+      period1: ""2024-01-01"",
+      interval: ""1d"",
+    });
+    const quotes = data.quotes;
+
+    const companyName = data.meta?.shortName || symbol;
+    const currentPrice = quotes[quotes.length - 1]?.close || null;
+
+    const response = {
+      ticker: symbol,
+      name: companyName,
+      currentPrice: currentPrice,
+      data: quotes.map((q) => ({
+        date: q.date,
+        close: q.close,
+        volume: q.volume,
+      })),
+    };
+
+    console.log(response);
+    res.json(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(""Error fetching stock data"");
+  }
+});","const express = require(""express"");
+const cors = require(""cors"");
+const yahooFinance = require(""yahoo-finance2"").default;
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+
+app.get(""/api/hello"", (req, res) => {
+  res.json({ message: ""Hello from the backend!"" });
+});
+
+app.get(""/api/stock/:symbol"", async (req, res) => {
+  try {
+    const symbol = req.params.symbol.toUpperCase();
+    const data = await yahooFinance.chart(symbol, {
+      period1: ""2024-01-01"",
+      interval: ""1d"",
+    });
+    const quotes = data.quotes;
+
+    const companyName = data.meta?.shortName || symbol;
+    const currentPrice = quotes[quotes.length - 1]?.close || null;
+
+    const response = {
+      ticker: symbol,
+      name: companyName,
+      currentPrice: currentPrice,
+      data: quotes.map((q) => ({
+        date: q.date,
+        close: q.close,
+        volume: q.volume,
+      })),
+    };
+
+    console.log(response);
+    res.json(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(""Error fetching stock data"");
+  }
+});
+
+app.listen(PORT, ""0.0.0.0"", () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});",15
+FD-C,"FinanceDashboard/frontend/src/StockChart.jsx","        <LineChart
+          data={chartData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <XAxis dataKey=""date"" />
+          <YAxis domain={[""auto"", ""auto""]} />
+          <Tooltip />
+          <Legend />
+          <Line type=""monotone"" dataKey=""price"" stroke=""#8884d8"" dot={false} />
+        </LineChart>","import React from ""react"";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from ""recharts"";
+
+const StockChart = ({ data }) => {
+  if (!data || !data.data || !data.data.length) return null;
+
+  const company = data.name;
+  const ticker = data.ticker;
+
+  const formatDateString = (date) => {
+    return date.split(""T"")[0];
+  };
+
+  // Combine labels and values into an array of objects for Recharts
+  const chartData = data.data.map((item) => ({
+    date: item.date,
+    price: item.close,
+  }));
+
+  return (
+    <div style={{ marginTop: ""2rem"" }}>
+      <h3>
+        {company} ({ticker})
+      </h3>
+      <ResponsiveContainer width=""100%"" height={300}>
+        <LineChart
+          data={chartData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <XAxis dataKey=""date"" />
+          <YAxis domain={[""auto"", ""auto""]} />
+          <Tooltip />
+          <Legend />
+          <Line type=""monotone"" dataKey=""price"" stroke=""#8884d8"" dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+export default StockChart;",35,"        <LineChart
+          data={chartData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <XAxis dataKey=""date"" tickFormatter={formatDateString} />
+          <YAxis domain={[""auto"", ""auto""]} />
+          <Tooltip />
+          <Legend />
+          <Line type=""monotone"" dataKey=""price"" stroke=""#8884d8"" dot={false} />
+          <ReferenceLine
+            y={currentPrice}
+            stroke=""red""
+            strokeDasharray=""5 5""
+          />{"" ""}
+        </LineChart>","import React from ""react"";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from ""recharts"";
+
+const StockChart = ({ data }) => {
+  if (!data || !data.data || !data.data.length) return null;
+
+  const company = data.name;
+  const ticker = data.ticker;
+
+  const formatDateString = (date) => {
+    const options = { month: ""short"" };
+    return new Date(date).toLocaleDateString(""en-US"", options);
+  };
+
+  // Combine labels and values into an array of objects for Recharts
+  const chartData = data.data.map((item) => ({
+    date: item.date,
+    price: item.close,
+  }));
+
+  const currentPrice = data.currentPrice;
+
+  return (
+    <div style={{ marginTop: ""2rem"" }}>
+      <h3>
+        {company} ({ticker})
+      </h3>
+      <ResponsiveContainer width=""100%"" height={300}>
+        <LineChart
+          data={chartData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <XAxis dataKey=""date"" tickFormatter={formatDateString} />
+          <YAxis domain={[""auto"", ""auto""]} />
+          <Tooltip />
+          <Legend />
+          <Line type=""monotone"" dataKey=""price"" stroke=""#8884d8"" dot={false} />
+          <ReferenceLine
+            y={currentPrice}
+            stroke=""red""
+            strokeDasharray=""5 5""
+          />{"" ""}
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+};
+
+export default StockChart;",38
+MP-A,MVPPredictor/scraper.py,"def scrape_season_stats(year):
+    base_url_reg = (
+        f""https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html""
+    )
+    df_reg = pd.read_html(base_url_reg, header=0)[0]
+    df_reg = df_reg[df_reg[""Player""] != ""Player""]  # remove repeated header rows
+    df_reg[""Year""] = year
+
+    df_reg = df_reg[
+        [""Player"", ""Year"", ""PTS"", ""AST"", ""TRB"", ""FG%""]
+    ]  # Keep only specified columns
+    df_reg = df_reg.dropna(
+        subset=[""PTS"", ""AST"", ""TRB"", ""FG%""]
+    )  # Ensure key stats aren't invalid
+    return df_reg","import pandas as pd
+import os
+
+
+def scrape_mvp_votes(start_year=2018, end_year=2025):
+    all_votes = []
+    for year in range(start_year, end_year + 1):
+        url = f""https://www.basketball-reference.com/awards/awards_{year}.html""
+        tables = pd.read_html(url, header=1)
+        try:
+            mvp_table = tables[0]  # MVP table is the first table
+            mvp_table[""Year""] = year
+            all_votes.append(mvp_table)
+        except:
+            print(f""Could not parse year {year}"")
+
+    df = pd.concat(all_votes)
+    df = df.rename(columns={""Player"": ""Name"", ""Pts Won"": ""MVP_Points""})
+    return df[[""Year"", ""Name"", ""MVP_Points""]]
+
+
+def scrape_season_stats(year):
+    base_url_reg = (
+        f""https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html""
+    )
+    df_reg = pd.read_html(base_url_reg, header=0)[0]
+    df_reg = df_reg[df_reg[""Player""] != ""Player""]  # remove repeated header rows
+    df_reg[""Year""] = year
+
+    df_reg = df_reg[
+        [""Player"", ""Year"", ""PTS"", ""AST"", ""TRB"", ""FG%""]
+    ]  # Keep only specified columns
+    df_reg = df_reg.dropna(
+        subset=[""PTS"", ""AST"", ""TRB"", ""FG%""]
+    )  # Ensure key stats aren't invalid
+    return df_reg
+
+
+def scrape_multiple_seasons(start_year=2018, end_year=2025):
+    all_stats = []
+    for year in range(start_year, end_year + 1):
+        df = scrape_season_stats(year)
+        all_stats.append(df)
+    return pd.concat(all_stats)
+
+
+if __name__ == ""__main__"":
+    if not os.path.exists(""data""):
+        os.makedirs(""data"")
+
+    print(""Scraping MVP votes..."")
+    mvp_df = scrape_mvp_votes()
+    mvp_df.to_csv(""data/mvp_votes.csv"", index=False)
+
+    print(""Scraping player stats..."")
+    stats_df = scrape_multiple_seasons()
+    stats_df.to_csv(""data/season_stats.csv"", index=False)",22,"def scrape_season_stats(year):
+    base_url_reg = (
+        f""https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html""
+    )
+    base_url_adv = (
+        f""https://www.basketball-reference.com/leagues/NBA_{year}_advanced.html""
+    )
+
+    df_reg = pd.read_html(base_url_reg, header=0)[0]
+    df_adv = pd.read_html(base_url_adv, header=0)[0]
+
+    df_reg = df_reg[df_reg[""Player""] != ""Player""]  # remove repeated header rows
+    df_adv = df_adv[df_adv[""Player""] != ""Player""]  # remove repeated header rows
+
+    df_reg[""Year""] = year
+    df_adv[""Year""] = year
+
+    df_reg = df_reg[[""Player"", ""Year"", ""PTS"", ""AST"", ""TRB"", ""FG%""]]
+    df_adv = df_adv[[""Player"", ""Year"", ""BPM"", ""WS/48"", ""TS%"", ""VORP"", ""WS"", ""PER""]]
+
+    df_reg = df_reg.dropna(subset=[""PTS"", ""AST"", ""TRB"", ""FG%""])
+    df_adv = df_adv.dropna(subset=[""BPM"", ""WS/48"", ""TS%"", ""VORP"", ""WS"", ""PER""])
+
+    df_merged = pd.merge(df_reg, df_adv, on=[""Player"", ""Year""])
+
+    return df_merged","import pandas as pd
+import os
+
+
+def scrape_mvp_votes(start_year=2018, end_year=2025):
+    all_votes = []
+    for year in range(start_year, end_year + 1):
+        url = f""https://www.basketball-reference.com/awards/awards_{year}.html""
+        tables = pd.read_html(url, header=1)
+        try:
+            mvp_table = tables[0]  # MVP table is the first table
+            mvp_table[""Year""] = year
+            all_votes.append(mvp_table)
+        except:
+            print(f""Could not parse year {year}"")
+
+    df = pd.concat(all_votes)
+    df = df.rename(columns={""Player"": ""Name"", ""Pts Won"": ""MVP_Points""})
+    return df[[""Year"", ""Name"", ""MVP_Points""]]
+
+
+def scrape_season_stats(year):
+    base_url_reg = (
+        f""https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html""
+    )
+    base_url_adv = (
+        f""https://www.basketball-reference.com/leagues/NBA_{year}_advanced.html""
+    )
+
+    df_reg = pd.read_html(base_url_reg, header=0)[0]
+    df_adv = pd.read_html(base_url_adv, header=0)[0]
+
+    df_reg = df_reg[df_reg[""Player""] != ""Player""]  # remove repeated header rows
+    df_adv = df_adv[df_adv[""Player""] != ""Player""]  # remove repeated header rows
+
+    df_reg[""Year""] = year
+    df_adv[""Year""] = year
+
+    df_reg = df_reg[[""Player"", ""Year"", ""PTS"", ""AST"", ""TRB"", ""FG%""]]
+    df_adv = df_adv[[""Player"", ""Year"", ""BPM"", ""WS/48"", ""TS%"", ""VORP"", ""WS"", ""PER""]]
+
+    df_reg = df_reg.dropna(subset=[""PTS"", ""AST"", ""TRB"", ""FG%""])
+    df_adv = df_adv.dropna(subset=[""BPM"", ""WS/48"", ""TS%"", ""VORP"", ""WS"", ""PER""])
+
+    df_merged = pd.merge(df_reg, df_adv, on=[""Player"", ""Year""])
+
+    return df_merged
+
+
+def scrape_multiple_seasons(start_year=2018, end_year=2025):
+    all_stats = []
+    for year in range(start_year, end_year + 1):
+        df = scrape_season_stats(year)
+        all_stats.append(df)
+        time.sleep(0.1)
+    return pd.concat(all_stats)
+
+
+if __name__ == ""__main__"":
+    if not os.path.exists(""data""):
+        os.makedirs(""data"")
+
+    print(""Scraping MVP votes..."")
+    mvp_df = scrape_mvp_votes()
+    mvp_df.to_csv(""data/mvp_votes.csv"", index=False)
+
+    print(""Scraping player stats..."")
+    stats_df = scrape_multiple_seasons()
+    stats_df.to_csv(""data/season_stats.csv"", index=False)",22
+MP-B,MVPPredictor/rank_model.py,"    # Model
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=100,
+        max_depth=4,
+        random_state=42,
+    )
+
+    print(""Training XGBoostRanker..."")
+    model.fit(X_train, y_train, group=train_groups)
+
+    # Predict, sort, and evaluate
+    y_pred = model.predict(X_test)
+    df.loc[test_idx, ""PredictedScore""] = y_pred
+    df.loc[test_idx, ""PredictedRank""] = (
+        df.loc[test_idx]
+        .groupby(""Year"")[""PredictedScore""]
+        .rank(ascending=False, method=""first"")
+    )
+
+    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+    print(f""NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}"")
+
+    # Show results
+    print(df[test_idx][[""Year"", ""Name"", ""Rank"", ""PredictedScore"", ""PredictedRank""]])
+    plot_ranking_predictions(df, 2024)
+    plot_ranking_predictions(df, 2025)","import pandas as pd
+from xgboost import XGBRanker
+from sklearn.metrics import ndcg_score
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+def load_data(path=""data/merged_data.csv""):
+    df = pd.read_csv(path)
+
+    # Features to use
+    feature_cols = [
+        ""PTS"",
+        ""AST"",
+        ""TRB"",
+        ""FG%"",
+        ""BPM"",
+        ""WS/48"",
+        ""TS%"",
+        ""VORP"",
+        ""WS"",
+        ""PER"",
+    ]
+    feature_cols = [
+        col for col in feature_cols if col in df.columns
+    ]  # only keep existing features
+    df = df.dropna(subset=feature_cols + [""Rank""])
+
+    # Sort by Year and Rank for consistency
+    df = df.sort_values(by=[""Year"", ""Rank""])
+
+    X = df[feature_cols]
+    y = df[""Rank""]
+    groups = df.groupby(""Year"").size().to_numpy()
+
+    return X, y, groups, df
+
+
+def evaluate_ndcg(y_true, y_pred, group_sizes):
+    scores = []
+    start = 0
+    for size in group_sizes:
+        true_ranks = y_true[start : start + size]
+        true_relevance = (max(true_ranks) + 1) - true_ranks
+        pred_scores = y_pred[start : start + size]
+        scores.append(ndcg_score([true_relevance], [pred_scores]))
+        start += size
+    return np.mean(scores)
+
+
+def xgboost_ranker(X, y, groups):
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=100,
+        max_depth=6,
+        random_state=42,
+    )
+
+    print(""Training XGBoostRanker..."")
+    model.fit(X, y, group=groups)
+
+    return model
+
+
+def plot_ranking_predictions(df, year):
+    """"""
+    Plot prediction error for a specific year.
+
+    Args:
+        df: DataFrame containing prediction results
+        year: Year to plot prediction errors for
+    """"""
+    df[""RankError""] = df[""PredictedRank""] - df[""Rank""]
+    year_df = df[df[""Year""] == year].copy()
+    year_df.sort_values(""Rank"", inplace=True)
+
+    plt.figure(figsize=(12, 6))
+    sns.barplot(x=""Name"", y=""RankError"", data=year_df, hue=""Name"", palette=""coolwarm"")
+    plt.axhline(0, color=""black"", linestyle=""--"")
+    plt.xticks(rotation=45, ha=""right"")
+    plt.ylabel(""Predicted Rank - True Rank"")
+    plt.title(f""MVP Ranking Predictions ({year})"")
+    plt.tight_layout()
+    plt.savefig(f""data/ranking_predictions_{year}.png"")
+
+
+def main():
+    X, y, group, df = load_data()
+
+    # Train-test split on years
+    unique_years = df[""Year""].unique()
+    train_years, test_years = (
+        unique_years[:-2],  # train: 2015-2023
+        unique_years[-2:],  # test: 2024-2025
+    )
+
+    train_idx = df[""Year""].isin(train_years)
+    test_idx = df[""Year""].isin(test_years)
+
+    X_train, X_test = X[train_idx], X[test_idx]
+    y_train, y_test = y[train_idx], y[test_idx]
+
+    # Group sizes
+    train_groups = df[train_idx].groupby(""Year"").size().to_numpy()
+    test_groups = df[test_idx].groupby(""Year"").size().to_numpy()
+
+    # Model
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=100,
+        max_depth=4,
+        random_state=42,
+    )
+
+    print(""Training XGBoostRanker..."")
+    model.fit(X_train, y_train, group=train_groups)
+
+    # Predict, sort, and evaluate
+    y_pred = model.predict(X_test)
+    df.loc[test_idx, ""PredictedScore""] = y_pred
+    df.loc[test_idx, ""PredictedRank""] = (
+        df.loc[test_idx]
+        .groupby(""Year"")[""PredictedScore""]
+        .rank(ascending=False, method=""first"")
+    )
+
+    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+    print(f""NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}"")
+
+    # Show results
+    print(df[test_idx][[""Year"", ""Name"", ""Rank"", ""PredictedScore"", ""PredictedRank""]])
+    plot_ranking_predictions(df, 2024)
+    plot_ranking_predictions(df, 2025)
+
+
+if __name__ == ""__main__"":
+    main()",109,"    # Model
+    best_ndcg = -1
+    best_n_estimators = 100
+    for n_estimators in [100, 1000, 2000]:
+        model = XGBRanker(
+            objective=""rank:pairwise"",
+            learning_rate=0.1,
+            n_estimators=n_estimators,
+            max_depth=4,
+            random_state=42,
+        )
+
+        print(f""Training XGBoostRanker with {n_estimators} estimators..."")
+        model.fit(X_train, y_train, group=train_groups)
+
+        # Predict and evaluate
+        y_pred = model.predict(X_test)
+        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+        print(f""NDCG Score with {n_estimators} estimators: {ndcg:.4f}"")
+
+        if ndcg > best_ndcg:
+            best_ndcg = ndcg
+            best_n_estimators = n_estimators
+
+    # Retrain with best n_estimators
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=best_n_estimators,
+        max_depth=4,
+        random_state=42,
+    )
+
+    print(f""Retraining XGBoostRanker with best n_estimators: {best_n_estimators}"")
+    model.fit(X_train, y_train, group=train_groups)
+
+    # Predict, sort, and evaluate
+    y_pred = model.predict(X_test)
+    df.loc[test_idx, ""PredictedScore""] = y_pred
+    df.loc[test_idx, ""PredictedRank""] = (
+        df.loc[test_idx]
+        .groupby(""Year"")[""PredictedScore""]
+        .rank(ascending=False, method=""first"")
+    )
+
+    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+    print(f""NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}"")
+
+    # Show results
+    print(df[test_idx][[""Year"", ""Name"", ""Rank"", ""PredictedScore"", ""PredictedRank""]])
+    plot_ranking_predictions(df, 2024)
+    plot_ranking_predictions(df, 2025)","import pandas as pd
+from xgboost import XGBRanker
+from sklearn.metrics import ndcg_score
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+def load_data(path=""data/merged_data.csv""):
+    df = pd.read_csv(path)
+
+    # Features to use
+    feature_cols = [
+        ""PTS"",
+        ""AST"",
+        ""TRB"",
+        ""FG%"",
+        ""BPM"",
+        ""WS/48"",
+        ""TS%"",
+        ""VORP"",
+        ""WS"",
+        ""PER"",
+    ]
+    feature_cols = [
+        col for col in feature_cols if col in df.columns
+    ]  # only keep existing features
+    df = df.dropna(subset=feature_cols + [""Rank""])
+
+    # Sort by Year and Rank for consistency
+    df = df.sort_values(by=[""Year"", ""Rank""])
+
+    X = df[feature_cols]
+    y = df[""Rank""]
+    groups = df.groupby(""Year"").size().to_numpy()
+
+    return X, y, groups, df
+
+
+def evaluate_ndcg(y_true, y_pred, group_sizes):
+    scores = []
+    start = 0
+    for size in group_sizes:
+        true_ranks = y_true[start : start + size]
+        true_relevance = (max(true_ranks) + 1) - true_ranks
+        pred_scores = y_pred[start : start + size]
+        scores.append(ndcg_score([true_relevance], [pred_scores]))
+        start += size
+    return np.mean(scores)
+
+
+def xgboost_ranker(X, y, groups):
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=100,
+        max_depth=6,
+        random_state=42,
+    )
+
+    print(""Training XGBoostRanker..."")
+    model.fit(X, y, group=groups)
+
+    return model
+
+
+def plot_ranking_predictions(df, year):
+    """"""
+    Display real and predicted ranks side-by-side for comparison.
+
+    Args:
+        df: DataFrame containing prediction results
+        year: Year to plot prediction errors for
+    """"""
+    year_df = df[df[""Year""] == year].copy()
+    year_df.sort_values(""Rank"", inplace=True)
+
+    plt.figure(figsize=(12, 6))
+    width = 0.35  # the width of the bars
+    indices = np.arange(len(year_df))
+
+    plt.bar(
+        indices,
+        year_df[""Rank""],
+        width,
+        label=""True Rank"",
+        color=sns.color_palette(""coolwarm"", 2)[0],
+    )
+    plt.bar(
+        indices + width,
+        year_df[""PredictedRank""],
+        width,
+        label=""Predicted Rank"",
+        color=sns.color_palette(""coolwarm"", 2)[1],
+        alpha=0.6,
+    )
+
+    plt.xticks(indices + width / 2, year_df[""Name""], rotation=45, ha=""right"")
+    plt.ylabel(""Rank"")
+    plt.title(f""MVP Ranking Predictions ({year})"")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f""data/ranking_predictions_{year}.png"")
+
+
+def main():
+    X, y, group, df = load_data()
+
+    # Train-test split on years
+    unique_years = df[""Year""].unique()
+    train_years, test_years = (
+        unique_years[:-2],  # train: 2018-2023
+        unique_years[-2:],  # test: 2024-2025
+    )
+
+    train_idx = df[""Year""].isin(train_years)
+    test_idx = df[""Year""].isin(test_years)
+
+    X_train, X_test = X[train_idx], X[test_idx]
+    y_train, y_test = y[train_idx], y[test_idx]
+
+    # Group sizes
+    train_groups = df[train_idx].groupby(""Year"").size().to_numpy()
+    test_groups = df[test_idx].groupby(""Year"").size().to_numpy()
+
+    # Model
+    best_ndcg = -1
+    best_n_estimators = 100
+    for n_estimators in [100, 1000, 2000]:
+        model = XGBRanker(
+            objective=""rank:pairwise"",
+            learning_rate=0.1,
+            n_estimators=n_estimators,
+            max_depth=4,
+            random_state=42,
+        )
+
+        print(f""Training XGBoostRanker with {n_estimators} estimators..."")
+        model.fit(X_train, y_train, group=train_groups)
+
+        # Predict and evaluate
+        y_pred = model.predict(X_test)
+        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+        print(f""NDCG Score with {n_estimators} estimators: {ndcg:.4f}"")
+
+        if ndcg > best_ndcg:
+            best_ndcg = ndcg
+            best_n_estimators = n_estimators
+
+    # Retrain with best n_estimators
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=best_n_estimators,
+        max_depth=4,
+        random_state=42,
+    )
+
+    print(f""Retraining XGBoostRanker with best n_estimators: {best_n_estimators}"")
+    model.fit(X_train, y_train, group=train_groups)
+
+    # Predict, sort, and evaluate
+    y_pred = model.predict(X_test)
+    df.loc[test_idx, ""PredictedScore""] = y_pred
+    df.loc[test_idx, ""PredictedRank""] = (
+        df.loc[test_idx]
+        .groupby(""Year"")[""PredictedScore""]
+        .rank(ascending=False, method=""first"")
+    )
+
+    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+    print(f""NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}"")
+
+    # Show results
+    print(df[test_idx][[""Year"", ""Name"", ""Rank"", ""PredictedScore"", ""PredictedRank""]])
+    plot_ranking_predictions(df, 2024)
+    plot_ranking_predictions(df, 2025)
+
+
+if __name__ == ""__main__"":
+    main()",126
+MP-C,MVPPredictor/rank_model.py,"def plot_ranking_predictions(df, year):
+    """"""
+    Plot prediction error for a specific year.
+
+    Args:
+        df: DataFrame containing prediction results
+        year: Year to plot prediction errors for
+    """"""
+    df[""RankError""] = df[""PredictedRank""] - df[""Rank""]
+    year_df = df[df[""Year""] == year].copy()
+    year_df.sort_values(""Rank"", inplace=True)
+
+    plt.figure(figsize=(12, 6))
+    sns.barplot(x=""Name"", y=""RankError"", data=year_df, hue=""Name"", palette=""coolwarm"")
+    plt.axhline(0, color=""black"", linestyle=""--"")
+    plt.xticks(rotation=45, ha=""right"")
+    plt.ylabel(""Predicted Rank - True Rank"")
+    plt.title(f""MVP Ranking Predictions ({year})"")
+    plt.tight_layout()
+    plt.savefig(f""data/ranking_predictions_{year}.png"")","import pandas as pd
+from xgboost import XGBRanker
+from sklearn.metrics import ndcg_score
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+def load_data(path=""data/merged_data.csv""):
+    df = pd.read_csv(path)
+
+    # Features to use
+    feature_cols = [
+        ""PTS"",
+        ""AST"",
+        ""TRB"",
+        ""FG%"",
+        ""BPM"",
+        ""WS/48"",
+        ""TS%"",
+        ""VORP"",
+        ""WS"",
+        ""PER"",
+    ]
+    feature_cols = [
+        col for col in feature_cols if col in df.columns
+    ]  # only keep existing features
+    df = df.dropna(subset=feature_cols + [""Rank""])
+
+    # Sort by Year and Rank for consistency
+    df = df.sort_values(by=[""Year"", ""Rank""])
+
+    X = df[feature_cols]
+    y = df[""Rank""]
+    groups = df.groupby(""Year"").size().to_numpy()
+
+    return X, y, groups, df
+
+
+def evaluate_ndcg(y_true, y_pred, group_sizes):
+    scores = []
+    start = 0
+    for size in group_sizes:
+        true_ranks = y_true[start : start + size]
+        true_relevance = (max(true_ranks) + 1) - true_ranks
+        pred_scores = y_pred[start : start + size]
+        scores.append(ndcg_score([true_relevance], [pred_scores]))
+        start += size
+    return np.mean(scores)
+
+
+def xgboost_ranker(X, y, groups):
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=100,
+        max_depth=6,
+        random_state=42,
+    )
+
+    print(""Training XGBoostRanker..."")
+    model.fit(X, y, group=groups)
+
+    return model
+
+
+def plot_ranking_predictions(df, year):
+    """"""
+    Plot prediction error for a specific year.
+
+    Args:
+        df: DataFrame containing prediction results
+        year: Year to plot prediction errors for
+    """"""
+    df[""RankError""] = df[""PredictedRank""] - df[""Rank""]
+    year_df = df[df[""Year""] == year].copy()
+    year_df.sort_values(""Rank"", inplace=True)
+
+    plt.figure(figsize=(12, 6))
+    sns.barplot(x=""Name"", y=""RankError"", data=year_df, hue=""Name"", palette=""coolwarm"")
+    plt.axhline(0, color=""black"", linestyle=""--"")
+    plt.xticks(rotation=45, ha=""right"")
+    plt.ylabel(""Predicted Rank - True Rank"")
+    plt.title(f""MVP Ranking Predictions ({year})"")
+    plt.tight_layout()
+    plt.savefig(f""data/ranking_predictions_{year}.png"")
+
+
+def main():
+    X, y, group, df = load_data()
+
+    # Train-test split on years
+    unique_years = df[""Year""].unique()
+    train_years, test_years = (
+        unique_years[:-2],  # train: 2015-2023
+        unique_years[-2:],  # test: 2024-2025
+    )
+
+    train_idx = df[""Year""].isin(train_years)
+    test_idx = df[""Year""].isin(test_years)
+
+    X_train, X_test = X[train_idx], X[test_idx]
+    y_train, y_test = y[train_idx], y[test_idx]
+
+    # Group sizes
+    train_groups = df[train_idx].groupby(""Year"").size().to_numpy()
+    test_groups = df[test_idx].groupby(""Year"").size().to_numpy()
+
+    # Model
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=100,
+        max_depth=4,
+        random_state=42,
+    )
+
+    print(""Training XGBoostRanker..."")
+    model.fit(X_train, y_train, group=train_groups)
+
+    # Predict, sort, and evaluate
+    y_pred = model.predict(X_test)
+    df.loc[test_idx, ""PredictedScore""] = y_pred
+    df.loc[test_idx, ""PredictedRank""] = (
+        df.loc[test_idx]
+        .groupby(""Year"")[""PredictedScore""]
+        .rank(ascending=False, method=""first"")
+    )
+
+    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+    print(f""NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}"")
+
+    # Show results
+    print(df[test_idx][[""Year"", ""Name"", ""Rank"", ""PredictedScore"", ""PredictedRank""]])
+    plot_ranking_predictions(df, 2024)
+    plot_ranking_predictions(df, 2025)
+
+
+if __name__ == ""__main__"":
+    main()",67,"def plot_ranking_predictions(df, year):
+    """"""
+    Display real and predicted ranks side-by-side for comparison.
+
+    Args:
+        df: DataFrame containing prediction results
+        year: Year to plot prediction errors for
+    """"""
+    year_df = df[df[""Year""] == year].copy()
+    year_df.sort_values(""Rank"", inplace=True)
+
+    plt.figure(figsize=(12, 6))
+    width = 0.35  # the width of the bars
+    indices = np.arange(len(year_df))
+
+    plt.bar(
+        indices,
+        year_df[""Rank""],
+        width,
+        label=""True Rank"",
+        color=sns.color_palette(""coolwarm"", 2)[0],
+    )
+    plt.bar(
+        indices + width,
+        year_df[""PredictedRank""],
+        width,
+        label=""Predicted Rank"",
+        color=sns.color_palette(""coolwarm"", 2)[1],
+        alpha=0.6,
+    )
+
+    plt.xticks(indices + width / 2, year_df[""Name""], rotation=45, ha=""right"")
+    plt.ylabel(""Rank"")
+    plt.title(f""MVP Ranking Predictions ({year})"")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f""data/ranking_predictions_{year}.png"")","import pandas as pd
+from xgboost import XGBRanker
+from sklearn.metrics import ndcg_score
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+def load_data(path=""data/merged_data.csv""):
+    df = pd.read_csv(path)
+
+    # Features to use
+    feature_cols = [
+        ""PTS"",
+        ""AST"",
+        ""TRB"",
+        ""FG%"",
+        ""BPM"",
+        ""WS/48"",
+        ""TS%"",
+        ""VORP"",
+        ""WS"",
+        ""PER"",
+    ]
+    feature_cols = [
+        col for col in feature_cols if col in df.columns
+    ]  # only keep existing features
+    df = df.dropna(subset=feature_cols + [""Rank""])
+
+    # Sort by Year and Rank for consistency
+    df = df.sort_values(by=[""Year"", ""Rank""])
+
+    X = df[feature_cols]
+    y = df[""Rank""]
+    groups = df.groupby(""Year"").size().to_numpy()
+
+    return X, y, groups, df
+
+
+def evaluate_ndcg(y_true, y_pred, group_sizes):
+    scores = []
+    start = 0
+    for size in group_sizes:
+        true_ranks = y_true[start : start + size]
+        true_relevance = (max(true_ranks) + 1) - true_ranks
+        pred_scores = y_pred[start : start + size]
+        scores.append(ndcg_score([true_relevance], [pred_scores]))
+        start += size
+    return np.mean(scores)
+
+
+def xgboost_ranker(X, y, groups):
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=100,
+        max_depth=6,
+        random_state=42,
+    )
+
+    print(""Training XGBoostRanker..."")
+    model.fit(X, y, group=groups)
+
+    return model
+
+
+def plot_ranking_predictions(df, year):
+    """"""
+    Display real and predicted ranks side-by-side for comparison.
+
+    Args:
+        df: DataFrame containing prediction results
+        year: Year to plot prediction errors for
+    """"""
+    year_df = df[df[""Year""] == year].copy()
+    year_df.sort_values(""Rank"", inplace=True)
+
+    plt.figure(figsize=(12, 6))
+    width = 0.35  # the width of the bars
+    indices = np.arange(len(year_df))
+
+    plt.bar(
+        indices,
+        year_df[""Rank""],
+        width,
+        label=""True Rank"",
+        color=sns.color_palette(""coolwarm"", 2)[0],
+    )
+    plt.bar(
+        indices + width,
+        year_df[""PredictedRank""],
+        width,
+        label=""Predicted Rank"",
+        color=sns.color_palette(""coolwarm"", 2)[1],
+        alpha=0.6,
+    )
+
+    plt.xticks(indices + width / 2, year_df[""Name""], rotation=45, ha=""right"")
+    plt.ylabel(""Rank"")
+    plt.title(f""MVP Ranking Predictions ({year})"")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(f""data/ranking_predictions_{year}.png"")
+
+
+def main():
+    X, y, group, df = load_data()
+
+    # Train-test split on years
+    unique_years = df[""Year""].unique()
+    train_years, test_years = (
+        unique_years[:-2],  # train: 2018-2023
+        unique_years[-2:],  # test: 2024-2025
+    )
+
+    train_idx = df[""Year""].isin(train_years)
+    test_idx = df[""Year""].isin(test_years)
+
+    X_train, X_test = X[train_idx], X[test_idx]
+    y_train, y_test = y[train_idx], y[test_idx]
+
+    # Group sizes
+    train_groups = df[train_idx].groupby(""Year"").size().to_numpy()
+    test_groups = df[test_idx].groupby(""Year"").size().to_numpy()
+
+    # Model
+    best_ndcg = -1
+    best_n_estimators = 100
+    for n_estimators in [100, 1000, 2000]:
+        model = XGBRanker(
+            objective=""rank:pairwise"",
+            learning_rate=0.1,
+            n_estimators=n_estimators,
+            max_depth=4,
+            random_state=42,
+        )
+
+        print(f""Training XGBoostRanker with {n_estimators} estimators..."")
+        model.fit(X_train, y_train, group=train_groups)
+
+        # Predict and evaluate
+        y_pred = model.predict(X_test)
+        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+        print(f""NDCG Score with {n_estimators} estimators: {ndcg:.4f}"")
+
+        if ndcg > best_ndcg:
+            best_ndcg = ndcg
+            best_n_estimators = n_estimators
+
+    # Retrain with best n_estimators
+    model = XGBRanker(
+        objective=""rank:pairwise"",
+        learning_rate=0.1,
+        n_estimators=best_n_estimators,
+        max_depth=4,
+        random_state=42,
+    )
+
+    print(f""Retraining XGBoostRanker with best n_estimators: {best_n_estimators}"")
+    model.fit(X_train, y_train, group=train_groups)
+
+    # Predict, sort, and evaluate
+    y_pred = model.predict(X_test)
+    df.loc[test_idx, ""PredictedScore""] = y_pred
+    df.loc[test_idx, ""PredictedRank""] = (
+        df.loc[test_idx]
+        .groupby(""Year"")[""PredictedScore""]
+        .rank(ascending=False, method=""first"")
+    )
+
+    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)
+    print(f""NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}"")
+
+    # Show results
+    print(df[test_idx][[""Year"", ""Name"", ""Rank"", ""PredictedScore"", ""PredictedRank""]])
+    plot_ranking_predictions(df, 2024)
+    plot_ranking_predictions(df, 2025)
+
+
+if __name__ == ""__main__"":
+    main()",67

@@ -1,0 +1,9 @@
+Metric,Unstructured-Low-M,Unstructured-Low-SD,Unstructured-Medium-M,Unstructured-Medium-SD,Unstructured-High-M,Unstructured-High-SD,Structured-Low-M,Structured-Low-SD,Structured-Medium-M,Structured-Medium-SD,Structured-High-M,Structured-High-SD
+Summary Accuracy,4.75,0.23,4.92,0.19,4.38,0.14,4.71,0.23,4.92,0.19,4.92,0
+Summary Clarity,4.88,0.25,4.92,0.25,4.71,0.33,5,0,4.88,0.19,4.83,0.25
+Segmentation Granularity,4.67,0.52,4.83,0.31,4.08,0.74,4.83,0.26,4.96,0.19,4.75,0.34
+Mapping Accuracy,4.85,0.76,4.99,0.05,4.94,0.27,5,0,5,0,4.95,0.22
+Mapping Coverage,4.69,0.9,4.98,0.1,4.96,0.19,4.96,0.14,4.97,0.12,4.95,0.22
+Diff Faithfulness,4.92,0.2,4.92,0.2,5,0,5,0,4.92,0.2,5,0
+Diff Completeness,4.92,0.2,4.92,0.2,4.75,0.27,4.83,0.26,5,0,5,0
+Diff Salience,4.83,0.26,4.17,0.26,3.75,1.08,4.75,0.42,4.42,0.74,4,1.18

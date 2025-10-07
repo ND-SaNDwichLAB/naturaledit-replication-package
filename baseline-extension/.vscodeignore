@@ -1,0 +1,20 @@
+.vscode/**
+.vscode-test/**
+out/**
+node_modules/**
+src/**
+.gitignore
+.yarnrc
+esbuild.js
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
+
+# Ignore all webview-ui files except the dist directory
+webview-ui/
+!webview-ui/dist/**
+.cursor/
+.specstory/

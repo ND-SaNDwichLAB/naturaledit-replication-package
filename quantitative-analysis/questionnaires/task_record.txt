@@ -1,0 +1,13 @@
+ID	FD-Order	FD-Condition	FD-A	FD-B	FD-C	FD-Time	MP-Order	MP-Condition	MP-A	MP-B	MP-C	MP-Time
+P01	1	Baseline	1	1	1	10	2	 NaturalEdit	1	1	1	21
+P02	2	Baseline	1	1	1	17	1	 NaturalEdit	0	1	0	25
+P03	1	 NaturalEdit	1	1	1	19	2	Baseline	1	1	1	20
+P04	2	 NaturalEdit	1	1	0	25	1	Baseline	1	1	0	25
+P05	1	Baseline	1	1	1	10	2	 NaturalEdit	1	1	1	20
+P06	2	Baseline	1	1	1	21	1	 NaturalEdit	1	0	1	22
+P07	1	 NaturalEdit	1	1	0	25	2	Baseline	1	1	1	23
+P08	2	 NaturalEdit	1	1	1	15	1	Baseline	1	1	1	25
+P09	1	Baseline	0	1	0	25	2	 NaturalEdit	1	1	1	25
+P10	2	Baseline	1	1	1	13	1	 NaturalEdit	1	1	1	14
+P11	1	 NaturalEdit	1	1	1	21	2	Baseline	0	1	1	25
+P12	2	 NaturalEdit	1	1	1	16	1	Baseline	1	1	1	25

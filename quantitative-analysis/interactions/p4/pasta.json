@@ -1,0 +1,622 @@
+[
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:22:30.000",
+        "data": {},
+        "source": "frontend",
+        "id": "kJ50YgQGDk2WMx1630dY"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:22:32.000",
+        "data": {
+            "section_id": "4aec3781-c0cc-4467-abbf-20f959c531f1",
+            "section_data": {
+                "lines": [
+                    19,
+                    21
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 313,
+                    "originalCode": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+                    "id": "4aec3781-c0cc-4467-abbf-20f959c531f1",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755670952000,
+                "editPromptValue": "",
+                "summaryData": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment."
+            }
+        },
+        "source": "frontend",
+        "id": "MZ6Wsyl1UR8nqmetywaX"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:22:32.000",
+        "data": {
+            "selected_code": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+            "summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment."
+        },
+        "source": "backend",
+        "id": "rAPGYhwfpcJNV59TLKhe"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-20 10:23:02.000",
+        "data": {
+            "instruction": "please add X-axis Tick Marks\n",
+            "section_id": "4aec3781-c0cc-4467-abbf-20f959c531f1"
+        },
+        "source": "frontend",
+        "id": "v0ogYn9RheYmFltYZx6W"
+    },
+    {
+        "event": "click_edit_in_prompt",
+        "timestamp": "2025-08-20 10:23:07.000",
+        "data": {
+            "section_id": "4aec3781-c0cc-4467-abbf-20f959c531f1",
+            "summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment."
+        },
+        "source": "frontend",
+        "id": "Zz2abqCxYMB9UHgMip35"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-20 10:23:07.000",
+        "data": {
+            "original_code": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+            "instruction": "please add X-axis Tick Marks",
+            "updated_code": "const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom Tick component for XAxis\n  const CustomTick = ({ x, y, payload }) => (\n    <g transform={`translate(${x},${y})`}>\n      <text x={0} y={0} dy={16} textAnchor=\"middle\" fill=\"#666\">\n        {formatDateString(payload.value)}\n      </text>\n      <line x1={0} y1={0} x2={0} y2={6} stroke=\"#666\" />\n    </g>\n  );\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tick={<CustomTick />} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );"
+        },
+        "source": "backend",
+        "id": "p2iBDL8rXL7aCTx1wz5h"
+    },
+    {
+        "event": "click_edit_in_prompt",
+        "timestamp": "2025-08-20 10:23:40.000",
+        "data": {
+            "section_id": "4aec3781-c0cc-4467-abbf-20f959c531f1",
+            "summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment."
+        },
+        "source": "frontend",
+        "id": "erykmMj4zEIeLj9CjCAG"
+    },
+    {
+        "event": "commit_modified_summary",
+        "timestamp": "2025-08-20 10:24:08.000",
+        "data": {
+            "original_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment.",
+            "edited_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment. please add X-axis Tick Marks",
+            "section_id": "4aec3781-c0cc-4467-abbf-20f959c531f1"
+        },
+        "source": "frontend",
+        "id": "IHu0cGQh5qhX2uOHH9X1"
+    },
+    {
+        "event": "modify_summary_mediation",
+        "timestamp": "2025-08-20 10:24:10.000",
+        "data": {
+            "original_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment.",
+            "original_code": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+            "edited_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment. please add X-axis Tick Marks",
+            "updated_code": "const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n          <XAxis dataKey=\"date\" tick={{ fontSize: 12 }} tickLine={true} />"
+        },
+        "source": "backend",
+        "id": "XqqG3l9b0RQLrcrN9jhc"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:25:11.000",
+        "data": {},
+        "source": "frontend",
+        "id": "OErSjVpiaWLCUwB0rhwV"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:25:13.000",
+        "data": {
+            "section_id": "d9782756-3a66-4391-927f-c22f72396104",
+            "section_data": {
+                "lines": [
+                    19,
+                    21
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 313,
+                    "originalCode": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+                    "id": "d9782756-3a66-4391-927f-c22f72396104",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755671113000,
+                "editPromptValue": "",
+                "summaryData": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment."
+            }
+        },
+        "source": "frontend",
+        "id": "N1ACBUPOqpz8Lyv6VNVj"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:25:13.000",
+        "data": {
+            "selected_code": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+            "summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment."
+        },
+        "source": "backend",
+        "id": "xobleSy7L6lI4VBh2O8t"
+    },
+    {
+        "event": "click_edit_in_prompt",
+        "timestamp": "2025-08-20 10:25:17.000",
+        "data": {
+            "section_id": "d9782756-3a66-4391-927f-c22f72396104",
+            "summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment."
+        },
+        "source": "frontend",
+        "id": "me5L8mIphDnOzKSYJX1x"
+    },
+    {
+        "event": "commit_modified_summary",
+        "timestamp": "2025-08-20 10:27:01.000",
+        "data": {
+            "original_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment.",
+            "edited_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment. please add x axis tick marks, show Jan, Feb, Mar...\n",
+            "section_id": "d9782756-3a66-4391-927f-c22f72396104"
+        },
+        "source": "frontend",
+        "id": "CiuHR9th2HZrLXoWdf6v"
+    },
+    {
+        "event": "modify_summary_mediation",
+        "timestamp": "2025-08-20 10:27:04.000",
+        "data": {
+            "original_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment.",
+            "original_code": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+            "edited_summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and selecting the first segment. please add x axis tick marks, show Jan, Feb, Mar...",
+            "updated_code": "const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  const formatMonth = (dateString) => {\n    const date = new Date(dateString);\n    const month = date.toLocaleString(\"default\", { month: \"short\" });\n    return month;\n  };\n  \n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis \n            dataKey=\"date\" \n            tickFormatter={formatMonth}\n            interval=\"preserveStartEnd\"\n          />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );"
+        },
+        "source": "backend",
+        "id": "y1loHS8qaUvhSh5SHVS9"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:27:24.000",
+        "data": {},
+        "source": "frontend",
+        "id": "reWp6uS0kPkfEsKuUdiO"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:27:25.000",
+        "data": {
+            "selected_code": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+            "summary": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and returning the first segment."
+        },
+        "source": "backend",
+        "id": "4dpdx7aGm1GXeyIeBx7t"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:27:25.000",
+        "data": {
+            "section_id": "3fb990c9-d28b-4623-b172-27d39c522f99",
+            "section_data": {
+                "lines": [
+                    19,
+                    21
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 313,
+                    "originalCode": "  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };",
+                    "id": "3fb990c9-d28b-4623-b172-27d39c522f99",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755671245000,
+                "editPromptValue": "",
+                "summaryData": "The formatDateString function takes a date string as input and returns only the date portion by splitting the string at the \"T\" character and returning the first segment."
+            }
+        },
+        "source": "frontend",
+        "id": "uWjgTFalVdAKxaiu9RRY"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:29:28.000",
+        "data": {},
+        "source": "frontend",
+        "id": "3tswg4pEcdvX1Bonhe0S"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:29:29.000",
+        "data": {
+            "section_id": "44854c9b-4d61-4271-94b2-39ac43ad85c6",
+            "section_data": {
+                "lines": [
+                    1,
+                    51
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 0,
+                    "originalCode": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "44854c9b-4d61-4271-94b2-39ac43ad85c6",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755671369000,
+                "editPromptValue": "",
+                "summaryData": "This React component, StockChart, receives stock data as a prop and renders a responsive line chart using Recharts to display the closing prices of a company's stock over time, including labeled axes, a tooltip, and a legend, while showing the company name and ticker above the chart."
+            }
+        },
+        "source": "frontend",
+        "id": "GT1kv2erV7GKS7hyk3hJ"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:29:29.000",
+        "data": {
+            "selected_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "summary": "This React component, StockChart, receives stock data as a prop and renders a responsive line chart using Recharts to display the closing prices of a company's stock over time, including labeled axes, a tooltip, and a legend, while showing the company name and ticker above the chart."
+        },
+        "source": "backend",
+        "id": "i91dwtmjgaq0LQftM9rZ"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-20 10:29:43.000",
+        "data": {
+            "instruction": "please add X-axis Tick Marks like Jan, Feb, ...\n",
+            "section_id": "44854c9b-4d61-4271-94b2-39ac43ad85c6"
+        },
+        "source": "frontend",
+        "id": "gxnRlf7uU8HFNawVGOTT"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-20 10:29:47.000",
+        "data": {
+            "original_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "instruction": "please add X-axis Tick Marks like Jan, Feb, ...",
+            "updated_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"default\", { month: \"short\" });\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;"
+        },
+        "source": "backend",
+        "id": "e8nI6c6aikHCVDrI9TmV"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:30:54.000",
+        "data": {},
+        "source": "frontend",
+        "id": "FFYH4MYbuyQaXubbQbiB"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:30:56.000",
+        "data": {
+            "selected_code": "  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"default\", { month: \"short\" });\n  };",
+            "summary": "The formatMonthTick function takes a date string, converts it to a Date object, and returns the abbreviated month name (e.g., \"Jan\", \"Feb\") for use as a custom X-axis tick label."
+        },
+        "source": "backend",
+        "id": "0vsJPhanlzg8ED4clEXw"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:30:56.000",
+        "data": {
+            "section_id": "9c91ebdc-f78f-4177-a22b-3678b5dc670c",
+            "section_data": {
+                "lines": [
+                    23,
+                    27
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 389,
+                    "originalCode": "  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"default\", { month: \"short\" });\n  };",
+                    "id": "9c91ebdc-f78f-4177-a22b-3678b5dc670c",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755671456000,
+                "editPromptValue": "",
+                "summaryData": "The formatMonthTick function takes a date string, converts it to a Date object, and returns the abbreviated month name (e.g., \"Jan\", \"Feb\") for use as a custom X-axis tick label."
+            }
+        },
+        "source": "frontend",
+        "id": "uC3oTPAhaDcSUrjx7tik"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-20 10:31:10.000",
+        "data": {
+            "instruction": "change to english month",
+            "section_id": "9c91ebdc-f78f-4177-a22b-3678b5dc670c"
+        },
+        "source": "frontend",
+        "id": "6hSGsBS0cNA0Npncg5uF"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-20 10:31:12.000",
+        "data": {
+            "original_code": "  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"default\", { month: \"short\" });\n  };",
+            "instruction": "change to english month",
+            "updated_code": "// Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"en-US\", { month: \"short\" });\n  };"
+        },
+        "source": "backend",
+        "id": "ZsHsPHZHm1bX2t67JRaZ"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:31:53.000",
+        "data": {},
+        "source": "frontend",
+        "id": "DwsRwHuCwJFBxgYjACrs"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:31:56.000",
+        "data": {
+            "section_id": "34acbb38-995f-41f5-906a-af05a1f4a6b3",
+            "section_data": {
+                "lines": [
+                    15,
+                    43
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 304,
+                    "originalCode": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});\n",
+                    "id": "34acbb38-995f-41f5-906a-af05a1f4a6b3",
+                    "filename": "index.js",
+                    "fullPath": "/project/workspace/server/index.js"
+                },
+                "createdAt": 1755671516000,
+                "editPromptValue": "",
+                "summaryData": "This code defines an Express route handler for GET requests to \"/api/stock/:symbol\" that fetches daily stock chart data for the specified symbol from Yahoo Finance starting from January 1, 2024, formats the results to include the ticker, company name, and an array of date, close price, and volume, and returns this data as a JSON response, handling errors with a 500 status if necessary."
+            }
+        },
+        "source": "frontend",
+        "id": "i022Xev9L7uQmO97YBBm"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:31:56.000",
+        "data": {
+            "selected_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});\n",
+            "summary": "This code defines an Express route handler for GET requests to \"/api/stock/:symbol\" that fetches daily stock chart data for the specified symbol from Yahoo Finance starting from January 1, 2024, formats the results to include the ticker, company name, and an array of date, close price, and volume, and returns this data as a JSON response, handling errors with a 500 status if necessary."
+        },
+        "source": "backend",
+        "id": "qeMao2pbiVixpuFWSSiG"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-20 10:32:32.000",
+        "data": {
+            "instruction": "the frontend also wants to know the current stock price, please add the current price as red dot line",
+            "section_id": "34acbb38-995f-41f5-906a-af05a1f4a6b3"
+        },
+        "source": "frontend",
+        "id": "OHBXhK7icr6MTjX6yiqz"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-20 10:32:41.000",
+        "data": {
+            "original_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});\n",
+            "instruction": "the frontend also wants to know the current stock price, please add the current price as red dot line",
+            "updated_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    // Get the current price as the last available close price\n    const currentPrice = quotes.length > 0 ? quotes[quotes.length - 1].close : null;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n      currentPrice: currentPrice, // Add current price for red dot line\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});"
+        },
+        "source": "backend",
+        "id": "yshWoILLj8yOl8HD8za7"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-20 10:33:25.000",
+        "data": {
+            "instruction": "the frontend also wants to know the current stock price, please indicate the current price",
+            "section_id": "34acbb38-995f-41f5-906a-af05a1f4a6b3"
+        },
+        "source": "frontend",
+        "id": "j7fixoHmYHC8GMHlPPGM"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-20 10:33:28.000",
+        "data": {
+            "original_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});\n",
+            "instruction": "the frontend also wants to know the current stock price, please indicate the current price",
+            "updated_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const currentPrice = quotes && quotes.length > 0 ? quotes[quotes.length - 1].close : null;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      currentPrice: currentPrice,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});"
+        },
+        "source": "backend",
+        "id": "7UOC4EfYGmhzN6s7jofV"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:36:13.000",
+        "data": {},
+        "source": "frontend",
+        "id": "qREvT0mV14pS61cxfsU3"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:36:17.000",
+        "data": {
+            "selected_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"en-US\", { month: \"short\" });\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "summary": "This React component, StockChart, receives stock data as a prop and renders a responsive line chart using Recharts to display the stock's closing prices over time, formatting the X-axis with month abbreviations and showing the company name and ticker above the chart. If no valid data is provided, the component returns null and renders nothing."
+        },
+        "source": "backend",
+        "id": "i4BAob58DwWEWk89clK3"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:36:17.000",
+        "data": {
+            "section_id": "97fbdbd8-965b-4ef1-a514-fab15ff1ef19",
+            "section_data": {
+                "lines": [
+                    1,
+                    57
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 0,
+                    "originalCode": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"en-US\", { month: \"short\" });\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "97fbdbd8-965b-4ef1-a514-fab15ff1ef19",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755671777000,
+                "editPromptValue": "",
+                "summaryData": "This React component, StockChart, receives stock data as a prop and renders a responsive line chart using Recharts to display the stock's closing prices over time, formatting the X-axis with month abbreviations and showing the company name and ticker above the chart. If no valid data is provided, the component returns null and renders nothing."
+            }
+        },
+        "source": "frontend",
+        "id": "kZilF1CYZ6DbywPV20MH"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:38:02.000",
+        "data": {},
+        "source": "frontend",
+        "id": "R18jrRZ2rp4XSBtuDVt8"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:38:04.000",
+        "data": {
+            "section_id": "ab4abfa6-cbd5-466d-a558-da71b28ddb59",
+            "section_data": {
+                "lines": [
+                    13,
+                    58
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 156,
+                    "originalCode": "const StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n  const current_price = data.current_price;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"en-US\", { month: \"short\" });\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "ab4abfa6-cbd5-466d-a558-da71b28ddb59",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755671884000,
+                "editPromptValue": "",
+                "summaryData": "The StockChart component renders a responsive line chart displaying a company's historical stock closing prices over time, using formatted month labels on the X-axis and showing the company name and ticker symbol as a heading. If the provided data is missing or empty, the component returns null and does not render anything."
+            }
+        },
+        "source": "frontend",
+        "id": "LhxH9eqLEiqq4oI9HfNt"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:38:04.000",
+        "data": {
+            "selected_code": "const StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n  const current_price = data.current_price;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"en-US\", { month: \"short\" });\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "summary": "The StockChart component renders a responsive line chart displaying a company's historical stock closing prices over time, using formatted month labels on the X-axis and showing the company name and ticker symbol as a heading. If the provided data is missing or empty, the component returns null and does not render anything."
+        },
+        "source": "backend",
+        "id": "s7yQtRv8Wy4txYQM3AVM"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-20 10:38:46.000",
+        "data": {
+            "instruction": "indicate current_price with a horizontal red dotted line with x axis",
+            "section_id": "ab4abfa6-cbd5-466d-a558-da71b28ddb59"
+        },
+        "source": "frontend",
+        "id": "bkA3TcLQRRKIpDue7oSz"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-20 10:38:51.000",
+        "data": {
+            "original_code": "const StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n  const current_price = data.current_price;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"en-US\", { month: \"short\" });\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "instruction": "indicate current_price with a horizontal red dotted line with x axis",
+            "updated_code": "const StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n  const current_price = data.current_price;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Custom formatter for X-axis to show month abbreviations like Jan, Feb, ...\n  const formatMonthTick = (dateStr) => {\n    const dateObj = new Date(dateStr);\n    return dateObj.toLocaleString(\"en-US\", { month: \"short\" });\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <ReferenceLine\n            y={current_price}\n            stroke=\"red\"\n            strokeDasharray=\"3 3\"\n            label={{ value: \"Current Price\", position: \"right\", fill: \"red\" }}\n          />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};"
+        },
+        "source": "backend",
+        "id": "CmzRcKV3hE9MALYuBA1H"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-20 10:42:55.000",
+        "data": {},
+        "source": "frontend",
+        "id": "9PDhHERrzAAQGr9ObjOl"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-20 10:42:59.000",
+        "data": {
+            "selected_code": "  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n",
+            "summary": "This code transforms the input stock data into an array of objects containing date and closing price, then renders a responsive line chart displaying the stock's price trend over time with labeled axes, tooltip, and legend, along with the company name and ticker above the chart."
+        },
+        "source": "backend",
+        "id": "NKQo856aglCCuYWkFo6i"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-20 10:42:59.000",
+        "data": {
+            "section_id": "5feb0400-5a6f-4431-b9bf-94ff9225eda0",
+            "section_data": {
+                "lines": [
+                    31,
+                    56
+                ],
+                "title": "Untitled",
+                "metadata": {
+                    "offset": 732,
+                    "originalCode": "  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n",
+                    "id": "5feb0400-5a6f-4431-b9bf-94ff9225eda0",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx"
+                },
+                "createdAt": 1755672179000,
+                "editPromptValue": "",
+                "summaryData": "This code transforms the input stock data into an array of objects containing date and closing price, then renders a responsive line chart displaying the stock's price trend over time with labeled axes, tooltip, and legend, along with the company name and ticker above the chart."
+            }
+        },
+        "source": "frontend",
+        "id": "mGL7lKb89EIm90C3ftmI"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-20 10:43:15.000",
+        "data": {
+            "instruction": "indicate the current price with red line",
+            "section_id": "5feb0400-5a6f-4431-b9bf-94ff9225eda0"
+        },
+        "source": "frontend",
+        "id": "dHaT2Anrapmp3boBKW0U"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-20 10:43:25.000",
+        "data": {
+            "original_code": "  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n",
+            "instruction": "indicate the current price with red line",
+            "updated_code": "const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" tickFormatter={formatMonthTick} />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <ReferenceLine y={current_price} stroke=\"red\" strokeWidth={2} label=\"Current Price\" />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};"
+        },
+        "source": "backend",
+        "id": "Pz5DGvKtfbV0Ss45uwZB"
+    },
+    {
+        "event": "click_edit_in_prompt",
+        "timestamp": "2025-08-20 10:43:56.000",
+        "data": {
+            "section_id": "5feb0400-5a6f-4431-b9bf-94ff9225eda0",
+            "summary": "This code transforms the input stock data into an array of objects containing date and closing price, then renders a responsive line chart displaying the stock's price trend over time with labeled axes, tooltip, and legend, along with the company name and ticker above the chart."
+        },
+        "source": "frontend",
+        "id": "AXqDQe6w5QT4kfFwGrJ5"
+    }
+]

@@ -1,0 +1,12 @@
+{
+  "name": "Devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bookworm",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "mechatroner.rainbow-csv"],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  }
+}

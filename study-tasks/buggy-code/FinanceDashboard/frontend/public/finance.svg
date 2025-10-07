@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12 8 40 40" width="128" height="128">
+  <!-- Roof: Line Chart -->
+  <polyline points="18,25 32,15 46,25" 
+            fill="none" stroke="black" stroke-width="3"/>
+  <circle cx="18" cy="25" r="4" fill="black"/>
+  <circle cx="32" cy="15" r="4" fill="black"/>
+  <circle cx="46" cy="25" r="4" fill="black"/>
+
+  <!-- Center Dollar Sign instead of middle bar -->
+  <text x="32" y="40" text-anchor="middle" 
+        font-size="20" font-weight="bold" 
+        font-family="Arial" fill="black">$</text>
+
+  <!-- Foundation: Left and Right Bars -->
+  <rect x="18" y="30" width="6" height="15" fill="black"/> <!-- Left bar -->
+  <rect x="40" y="30" width="6" height="15" fill="black"/> <!-- Right bar -->
+</svg>

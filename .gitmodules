@@ -1,0 +1,6 @@
+[submodule "evaluation-showcase"]
+	path = evaluation-showcase
+	url = https://github.com/TTangNingzhi/naturaledit-evaluation-showcase
+[submodule "naturaledit-extension"]
+	path = naturaledit-extension
+	url = https://github.com/TTangNingzhi/NaturalEdit

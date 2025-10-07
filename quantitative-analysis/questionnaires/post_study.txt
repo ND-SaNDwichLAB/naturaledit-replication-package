@@ -1,0 +1,13 @@
+ID	The study tasks felt as realistic as my daily programming.	NaturalEdit: This system’s capabilities meet my requirements.	NaturalEdit: This system is easy to use.	NaturalEdit: I can quickly learn how to use the system.	NaturalEdit: I would use this system in my real development work if it were available.	NaturalEdit: The system helps me comprehend the original code.	NaturalEdit: The system supports me in specifying my intentions.	NaturalEdit: The system helps me understand and validate the modified code.	NaturalEdit: The system assists with the iterative refinement of code.	NaturalEdit: The natural language representation is useful for achieving the task goal.	NaturalEdit: I felt a good sense of control over the system’s behavior.	NaturalEdit: I am generally satisfied with the code modifications produced by the system.	PASTA: This system’s capabilities meet my requirements.	PASTA: This system is easy to use.	PASTA: I can quickly learn how to use the system.	PASTA: I would use this system in my real development work if it were available.	PASTA: The system helps me comprehend the original code.	PASTA: The system supports me in specifying my intentions.	PASTA: The system helps me understand and validate the modified code.	PASTA: The system assists with the iterative refinement of code.	PASTA: The natural language representation is useful for achieving the task goal.	PASTA: I felt a good sense of control over the system’s behavior.	PASTA: I am generally satisfied with the code modifications produced by the system.	NaturalEdit: The adaptive and multifaceted summaries helped in understanding the code at different levels.	NaturalEdit: The interactive mapping between summary and code made their relationship explicit and easy to follow.	NaturalEdit: By applying direct instructions to the summary, I was able to express my intentions flexibly and efficiently.	NaturalEdit: The auto-updated summary with visual diffs helped me validate the changes in a consistent workflow.
+P01	5	6	7	6	5	6	6	6	7	5	6	6	6	5	6	4	5	6	6	6	5	6	6	6	7	7	5
+P02	5	5	6	7	7	6	5	5	4	6	7	7	4	4	7	3	5	5	4	3	5	4	6	6	7	6	5
+P03	6	6	4	6	7	7	6	4	7	7	7	7	6	7	7	2	2	7	4	6	2	7	5	7	5	7	7
+P04	5	6	6	6	7	7	6	6	6	7	6	7	4	6	5	3	2	2	3	3	1	2	3	6	7	7	7
+P05	7	7	7	6	7	7	7	6	7	7	7	7	6	7	7	7	7	7	5	7	7	7	7	7	7	7	7
+P06	5	5	6	7	7	7	6	6	6	7	6	6	4	5	5	5	4	4	4	5	4	5	5	7	7	7	7
+P07	6	6	5	6	6	6	6	6	6	6	6	6	3	6	6	3	3	3	3	3	4	4	4	6	6	7	5
+P08	5	3	6	7	4	6	6	6	4	7	4	7	4	6	7	3	2	6	5	4	6	5	6	6	7	7	7
+P09	6	5	5	6	6	6	6	6	5	6	6	5	5	3	6	5	5	3	5	4	5	6	4	6	6	6	5
+P10	7	6	6	7	7	6	7	4	5	7	7	7	5	5	7	4	1	1	1	2	4	3	5	7	4	7	6
+P11	5	6	7	7	6	7	7	6	7	7	6	7	4	6	7	3	3	4	4	5	5	3	2	6	7	7	7
+P12	5	7	7	7	6	7	7	6	6	7	7	7	6	7	7	5	4	5	5	4	6	5	5	7	7	7	5

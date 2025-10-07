@@ -1,0 +1,64 @@
+### START TESTS ###
+if True:  # pragma: no cover
+    # Game tests
+    gameOver = Game(None, None)
+    gameOver.board = [[True, False, True], [False, True, False], [True, False, True]]
+    assert gameOver.gameOver()
+
+    player1Won = Game(None, None)
+    player1Won.board = [[True, True, True], [True, True, True], [True, True, True]]
+    assert player1Won.playerXWon(True)
+
+    player2Won = Game(None, None)
+
+    player2Won.board = [
+        [False, False, False],
+        [False, False, False],
+        [False, False, False],
+    ]
+    assert player2Won.playerXWon(False)
+    downDiag = Game(None, None)
+    downDiag.board = [[True, False, False], [False, True, False], [False, False, True]]
+    assert downDiag.playerXWon(True)
+    upDiag = Game(None, None)
+    upDiag.board = [[False, False, True], [False, True, False], [True, False, False]]
+    assert upDiag.playerXWon(True)
+
+    cs = CornerStrategy()
+    b = [[None for _ in range(3)] for _ in range(3)]
+    assert cs.returnMove(b) == (0, 0)
+    b[0][0] = True
+    assert cs.returnMove(b) == (0, 2)
+    b[0][2] = True
+    assert cs.returnMove(b) == (2, 0)
+    b[2][0] = True
+    assert cs.returnMove(b) == (2, 2)
+    b[2][2] = True
+
+    try:
+        cs.returnMove(b)
+    except:
+        assert True
+    else:
+        assert False
+
+    gs = GoodStrategy()
+    b = [[None for _ in range(3)] for _ in range(3)]
+    try:
+        gs.returnMove(b)
+        gs.returnMove(b)
+        gs.returnMove(b)
+        gs.returnMove(b)
+    except Exception:
+        assert True
+
+    # Followed prompt test
+    g = Game(GoodStrategy(), CornerStrategy())
+    assert g.player1Won()
+    g = Game(CornerStrategy(), GoodStrategy())
+    assert not g.player1Won()
+
+    gameOver = Game(GoodStrategy(), CornerStrategy())
+    gameOver.board = [[True, False, True], [False, True, False], [True, False, True]]
+    assert gameOver.gameOver()
+    assert not gameOver.player1Won()

@@ -1,0 +1,25 @@
+ID	Task	Condition	Mental Demand	Physical Demand	Temporal Demand	Performance	Effort	Frustration	Code Understanding	Edits Understanding
+P01	JavaScript	PASTA	2	2	2	1	3	1	3	6
+P01	Python	NaturalEdit	4	2	3	2	4	2	2	5
+P02	Python	PASTA	4	3	4	3	4	2	6	5
+P02	JavaScript	NaturalEdit	3	2	2	1	3	2	7	5
+P03	JavaScript	NaturalEdit	4	2	2	1	2	1	3	3
+P03	Python	PASTA	2	2	2	1	2	2	3	2
+P04	Python	NaturalEdit	3	2	3	4	5	5	5	5
+P04	JavaScript	PASTA	6	6	7	3	6	4	2	2
+P05	JavaScript	PASTA	2	1	1	1	1	1	6	6
+P05	Python	NaturalEdit	4	1	2	1	3	1	7	7
+P06	Python	PASTA	3	2	4	1	2	2	3	4
+P06	JavaScript	NaturalEdit	3	2	3	2	2	2	3	3
+P07	JavaScript	NaturalEdit	6	5	2	5	4	2	6	6
+P07	Python	PASTA	2	2	2	2	2	2	2	2
+P08	Python	NaturalEdit	3	1	3	2	2	3	6	6
+P08	JavaScript	PASTA	2	1	2	1	2	2	5	5
+P09	JavaScript	PASTA	3	3	3	6	3	4	3	5
+P09	Python	NaturalEdit	2	2	2	2	3	3	3	5
+P10	Python	PASTA	2	2	2	2	2	2	1	1
+P10	JavaScript	NaturalEdit	2	2	2	2	2	1	6	6
+P11	JavaScript	NaturalEdit	1	1	1	2	1	1	1	6
+P11	Python	PASTA	1	1	1	4	4	1	7	3
+P12	Python	NaturalEdit	3	1	1	1	2	1	6	6
+P12	JavaScript	PASTA	5	2	1	1	3	2	4	5

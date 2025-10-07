@@ -1,0 +1,121 @@
+{
+  "name": "edithelper",
+  "displayName": "EditHelper",
+  "publisher": "sandwich-lab",
+  "icon": "media/icon.png",
+  "description": "Transform your code by editing natural language summaries",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TTangNingzhi/NaturalEdit"
+  },
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "pasta-sidebar",
+          "title": "EditHelper",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "pasta-sidebar": [
+        {
+          "id": "pasta.sidebarView",
+          "name": "EditHelper",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "pasta.updateApiKey",
+        "title": "Update OpenAI API Key",
+        "category": "PASTA"
+      }
+    ],
+    "configuration": {
+      "title": "NaturalEdit",
+      "properties": {
+        "naturaledit.firebase.apiKey": {
+          "type": "string",
+          "default": "xxxxxx"
+        },
+        "naturaledit.firebase.authDomain": {
+          "type": "string",
+          "default": "naturaledit-study.firebaseapp.com"
+        },
+        "naturaledit.firebase.projectId": {
+          "type": "string",
+          "default": "naturaledit-study"
+        },
+        "naturaledit.firebase.storageBucket": {
+          "type": "string",
+          "default": "naturaledit-study.firebasestorage.app"
+        },
+        "naturaledit.firebase.messagingSenderId": {
+          "type": "string",
+          "default": "544885114600"
+        },
+        "naturaledit.firebase.appId": {
+          "type": "string",
+          "default": "1:xxxxxx"
+        },
+        "naturaledit.firebase.measurementId": {
+          "type": "string",
+          "default": "G-WBD1ZB51CC"
+        },
+        "naturaledit.telemetry.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable telemetry data collection"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/diff-match-patch": "^1.0.36",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/node-fetch": "^2.6.12",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.89.0",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.23.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "diff-match-patch": "^1.0.5",
+    "firebase": "^12.1.0",
+    "node-fetch": "^2.7.0",
+    "uuid": "^11.1.0"
+  }
+}
