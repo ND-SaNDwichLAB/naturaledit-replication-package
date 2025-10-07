@@ -9,7 +9,7 @@ This repository contains the replication package for the paper "NaturalEdit: Cod
   Source code for the Baseline VS Code extension used in the user study.
 
 - **`evaluation-showcase/`**
-  Source code for the technical evaluation showcase website, including the interface used to assist expert ratings and the interactive demo for evaluating individual data points in the benchmark. **Deployed at [www.nztang.com/naturaledit-evaluation-showcase/](www.nztang.com/naturaledit-evaluation-showcase/), please take a look!**.
+  Source code for the technical evaluation showcase website, including the interface used to assist expert ratings and the interactive demo for evaluating individual data points in the benchmark. **Deployed at [www.nztang.com/naturaledit-evaluation-showcase/](https://www.nztang.com/naturaledit-evaluation-showcase/), please take a look!**.
 
 - **`benchmark-results/`**  
   Materials for the benchmark evaluation, including all model outputs and evaluation scripts.
