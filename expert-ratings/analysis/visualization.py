@@ -106,7 +106,8 @@ def plot_category_row(ax_row, df: pd.DataFrame, metrics: list, titles: list):
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(script_dir, "data", "final_statistics.csv")
-    out_path = os.path.join(script_dir, "final_statistics_plots.pdf")
+    out_pdf_path = os.path.join(script_dir, "final_statistics_plots.pdf")
+    out_svg_path = os.path.join(script_dir, "final_statistics_plots.svg")
 
     df = load_statistics(csv_path)
 
@@ -165,8 +166,8 @@ def main():
         fontsize=12,
     )
 
-    fig.savefig(out_path, format="pdf")
-    print(f"Saved figure to: {out_path}")
+    fig.savefig(out_pdf_path, format="pdf")
+    fig.savefig(out_svg_path, format="svg")
 
 
 if __name__ == "__main__":
