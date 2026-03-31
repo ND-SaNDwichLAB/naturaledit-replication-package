@@ -9,5 +9,5 @@ After open the CodeSandbox link, please follow these steps:
 4. Start using the extension to complete the tasks. Please note that it requires an OpenAI API key to enable the functionality.
 
 ## Links
-1. Finance Dashboard: https://codesandbox.io/p/devbox/6hf2dg
-2. MVP Predictor: https://codesandbox.io/p/devbox/3h6s9l
+1. Finance Dashboard: https://codesandbox.io/p/devbox/finance-dashboard-x54sq6
+2. MVP Predictor: https://codesandbox.io/p/devbox/blissful-raman-frtw89

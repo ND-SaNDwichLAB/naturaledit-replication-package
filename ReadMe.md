@@ -1,6 +1,6 @@
 # NaturalEdit Replication Package
 
-This repository contains the replication package for the paper "NaturalEdit: Code Modification through Direct Interaction with Adaptive Natural Language Representation." Please note that the content already included in the paper appendix is not repeated here. The package is organized as follows (with key folders and files described):
+This repository contains the replication package for the paper "NaturalEdit: Code Modification through Direct Interaction with Adaptive Natural Language Representation" ([arXiv:2510.04494](https://arxiv.org/abs/2510.04494)). Please note that the content already included in the paper appendix is not repeated here. The package is organized as follows (with key folders and files described):
 
 - **`naturaledit-extension/`**  
   Source code for the NaturalEdit VS Code extension.
@@ -33,21 +33,15 @@ This repository contains the replication package for the paper "NaturalEdit: Cod
     - `visualization.py`: Script to visualize expert ratings.
 
 - **`study-tasks/`**  
-  Programming tasks used in the study. Deployed in CodeSandbox, where you can play with the tasks and the extensions:
-  1. Finance Dashboard: https://codesandbox.io/p/devbox/6hf2dg
-  2. MVP Predictor: https://codesandbox.io/p/devbox/3h6s9l
+  Programming tasks used in the study. Deployed in CodeSandbox, where you can play with the tasks and the extensions. Task descriptions are available at [Notion: Study Task Description](https://www.notion.so/Study-Task-Description-249eb87e9b3780149246ee6180533749?source=copy_link):
   - `buggy-code/`: Initial code given to participants.
   - `ground-truth/`: Reference solutions.
   - `setup/`: Setup files for CodeSandbox environments.
   - `naturaledit.vsix`: Compiled VSIX file of the NaturalEdit extension.
   - `edithelper.vsix`: Compiled VSIX file of the Baseline extension.
 
-- **`qualitative-analysis/`**  
-  Materials for qualitative analysis of the user study.
-  - `coded_quotes.csv`: Anonymized, coded interview segments.
-
-- **`quantitative-analysis/`**  
-  Materials for quantitative analysis of the user study.
+- **`user-study-analysis/`**  
+  Materials for data analysis of the user study.
   - `download/`: Scripts for downloading raw interaction logs from the Firebase.
   - `interactions/`: JSON files of each participant's interaction logs.
     - `naturaledit_cleaned.csv`: Cleaned interaction logs for NaturalEdit.

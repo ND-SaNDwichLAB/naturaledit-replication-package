@@ -1,0 +1,394 @@
+[
+    {
+        "source": "frontend",
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-24 12:20:27.000",
+        "data": {},
+        "id": "QlXPOVBIZpkviGj9nD6e"
+    },
+    {
+        "source": "backend",
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-24 12:20:29.000",
+        "data": {
+            "summary": "This code defines a React functional component called StockChart that takes stock data as a prop and renders a responsive line chart using Recharts to display the company's closing prices over time, including axes, tooltip, and legend, with the company name and ticker shown above the chart.",
+            "selected_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n"
+        },
+        "id": "dcGxESTaOuGLQoaZU7qY"
+    },
+    {
+        "source": "frontend",
+        "event": "create_new_section",
+        "timestamp": "2025-08-24 12:20:29.000",
+        "data": {
+            "section_data": {
+                "lines": [
+                    1,
+                    51
+                ],
+                "summaryData": "This code defines a React functional component called StockChart that takes stock data as a prop and renders a responsive line chart using Recharts to display the company's closing prices over time, including axes, tooltip, and legend, with the company name and ticker shown above the chart.",
+                "editPromptValue": "",
+                "createdAt": 1756066829000,
+                "metadata": {
+                    "originalCode": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "ef470def-4000-478e-b4b3-52aa3dddc6e0",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx",
+                    "offset": 0
+                },
+                "title": "Untitled"
+            },
+            "section_id": "ef470def-4000-478e-b4b3-52aa3dddc6e0"
+        },
+        "id": "fpL2GS7PCsnSycZF5U8j"
+    },
+    {
+        "source": "frontend",
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-24 12:21:12.000",
+        "data": {
+            "instruction": "use formatdateString",
+            "section_id": "ef470def-4000-478e-b4b3-52aa3dddc6e0"
+        },
+        "id": "TyXvZSxl5JcwJ2i04vnl"
+    },
+    {
+        "source": "backend",
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-24 12:21:14.000",
+        "data": {
+            "original_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: item.date,\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "instruction": "use formatdateString",
+            "updated_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;"
+        },
+        "id": "9wL85zABdUcXY6MFYuVi"
+    },
+    {
+        "source": "frontend",
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-24 12:22:25.000",
+        "data": {},
+        "id": "UAFDWy3r3orSb3VcSahl"
+    },
+    {
+        "source": "frontend",
+        "event": "create_new_section",
+        "timestamp": "2025-08-24 12:22:26.000",
+        "data": {
+            "section_data": {
+                "lines": [
+                    1,
+                    51
+                ],
+                "summaryData": "This React component, StockChart, receives stock data as a prop, formats the date and closing price for each entry, and renders a responsive line chart using Recharts to visually display the stock's price history along with axes, tooltip, and legend for the specified company and ticker symbol.",
+                "editPromptValue": "",
+                "createdAt": 1756066946000,
+                "metadata": {
+                    "originalCode": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "9002530d-7371-448b-acc9-d9378d867ea9",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx",
+                    "offset": 0
+                },
+                "title": "Untitled"
+            },
+            "section_id": "9002530d-7371-448b-acc9-d9378d867ea9"
+        },
+        "id": "75fGipkrSbL4ksO8ZV6e"
+    },
+    {
+        "source": "backend",
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-24 12:22:26.000",
+        "data": {
+            "summary": "This React component, StockChart, receives stock data as a prop, formats the date and closing price for each entry, and renders a responsive line chart using Recharts to visually display the stock's price history along with axes, tooltip, and legend for the specified company and ticker symbol.",
+            "selected_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n"
+        },
+        "id": "8g506iG964CDsMbgSXNj"
+    },
+    {
+        "source": "frontend",
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-24 12:22:35.000",
+        "data": {},
+        "id": "1WJh4PDoyl1DOLiXDKJC"
+    },
+    {
+        "source": "backend",
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-24 12:22:36.000",
+        "data": {
+            "summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the data for use with the Recharts library, and renders a responsive line chart displaying the closing prices of a company over time, along with chart features such as axes, tooltips, and a legend.",
+            "selected_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n"
+        },
+        "id": "62gp87vBOYqi3UJp08yn"
+    },
+    {
+        "source": "frontend",
+        "event": "create_new_section",
+        "timestamp": "2025-08-24 12:22:36.000",
+        "data": {
+            "section_data": {
+                "lines": [
+                    1,
+                    51
+                ],
+                "summaryData": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the data for use with the Recharts library, and renders a responsive line chart displaying the closing prices of a company over time, along with chart features such as axes, tooltips, and a legend.",
+                "editPromptValue": "",
+                "createdAt": 1756066956000,
+                "metadata": {
+                    "originalCode": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "20f851d4-0879-4f30-9845-e8d195b8c40a",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx",
+                    "offset": 0
+                },
+                "title": "Untitled"
+            },
+            "section_id": "20f851d4-0879-4f30-9845-e8d195b8c40a"
+        },
+        "id": "StSzyoTNEXxkloySBWKg"
+    },
+    {
+        "source": "frontend",
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-24 12:23:35.000",
+        "data": {
+            "instruction": "revise the formatDateString function to only display the month for the date, in a format like (Jan, Feb, Mar)",
+            "section_id": "20f851d4-0879-4f30-9845-e8d195b8c40a"
+        },
+        "id": "hdlBerorIM0wmKfPiRCG"
+    },
+    {
+        "source": "backend",
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-24 12:23:38.000",
+        "data": {
+            "original_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    return date.split(\"T\")[0];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "instruction": "revise the formatDateString function to only display the month for the date, in a format like (Jan, Feb, Mar)",
+            "updated_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;"
+        },
+        "id": "0DmpKfkfXwuUHLU7KtOO"
+    },
+    {
+        "source": "frontend",
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-24 12:24:55.000",
+        "data": {},
+        "id": "cVIGBqSgj3el0hajS7g3"
+    },
+    {
+        "source": "backend",
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-24 12:24:56.000",
+        "data": {
+            "summary": "This code defines an Express route handler for GET requests to \"/api/stock/:symbol\" that retrieves daily stock chart data for the specified symbol from Yahoo Finance starting from January 1, 2024, formats the results to include the ticker, company name, and an array of date, close price, and volume, and returns this data as a JSON response, handling errors with a 500 status if necessary.",
+            "selected_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});\n"
+        },
+        "id": "Af7dlkNXxwF5DUDvBnw0"
+    },
+    {
+        "source": "frontend",
+        "event": "create_new_section",
+        "timestamp": "2025-08-24 12:24:56.000",
+        "data": {
+            "section_data": {
+                "lines": [
+                    15,
+                    43
+                ],
+                "summaryData": "This code defines an Express route handler for GET requests to \"/api/stock/:symbol\" that retrieves daily stock chart data for the specified symbol from Yahoo Finance starting from January 1, 2024, formats the results to include the ticker, company name, and an array of date, close price, and volume, and returns this data as a JSON response, handling errors with a 500 status if necessary.",
+                "editPromptValue": "",
+                "createdAt": 1756067096000,
+                "metadata": {
+                    "originalCode": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});\n",
+                    "id": "18491c80-b353-40f3-b297-d7ffeae0ef41",
+                    "filename": "index.js",
+                    "fullPath": "/project/workspace/server/index.js",
+                    "offset": 304
+                },
+                "title": "Untitled"
+            },
+            "section_id": "18491c80-b353-40f3-b297-d7ffeae0ef41"
+        },
+        "id": "j7LsvAoNXr0NtH716V47"
+    },
+    {
+        "source": "frontend",
+        "event": "click_edit_in_prompt",
+        "timestamp": "2025-08-24 12:25:24.000",
+        "data": {
+            "summary": "This code defines an Express route handler for GET requests to \"/api/stock/:symbol\" that retrieves daily stock chart data for the specified symbol from Yahoo Finance starting from January 1, 2024, formats the results to include the ticker, company name, and an array of date, close price, and volume, and returns this data as a JSON response, handling errors with a 500 status if necessary.",
+            "section_id": "18491c80-b353-40f3-b297-d7ffeae0ef41"
+        },
+        "id": "Ow0ESiGinmEezVwqttWg"
+    },
+    {
+        "source": "frontend",
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-24 12:26:10.000",
+        "data": {
+            "instruction": "I also want the current stock price",
+            "section_id": "18491c80-b353-40f3-b297-d7ffeae0ef41"
+        },
+        "id": "US5nMxGaSkA2GckEoDSK"
+    },
+    {
+        "source": "backend",
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-24 12:26:12.000",
+        "data": {
+            "original_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});\n",
+            "instruction": "I also want the current stock price",
+            "updated_code": "app.get(\"/api/stock/:symbol\", async (req, res) => {\n  try {\n    const symbol = req.params.symbol.toUpperCase();\n    const data = await yahooFinance.chart(symbol, {\n      period1: \"2024-01-01\",\n      interval: \"1d\",\n    });\n    const quotes = data.quotes;\n\n    const companyName = data.meta?.shortName || symbol;\n    const currentPrice = quotes.length > 0 ? quotes[quotes.length - 1].close : null;\n\n    const response = {\n      ticker: symbol,\n      name: companyName,\n      currentPrice: currentPrice,\n      data: quotes.map((q) => ({\n        date: q.date,\n        close: q.close,\n        volume: q.volume,\n      })),\n    };\n\n    console.log(response);\n    res.json(response);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send(\"Error fetching stock data\");\n  }\n});"
+        },
+        "id": "JanMEdEioD4rWBR41V3L"
+    },
+    {
+        "source": "frontend",
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-24 12:26:58.000",
+        "data": {},
+        "id": "rEz7Ie0iIWped0MwztPY"
+    },
+    {
+        "source": "frontend",
+        "event": "create_new_section",
+        "timestamp": "2025-08-24 12:27:00.000",
+        "data": {
+            "section_data": {
+                "lines": [
+                    1,
+                    66
+                ],
+                "summaryData": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the dates to month abbreviations, and renders a responsive line chart displaying the stock's closing prices over time using the Recharts library, complete with axes, tooltip, and legend.",
+                "editPromptValue": "",
+                "createdAt": 1756067220000,
+                "metadata": {
+                    "originalCode": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "969d847d-842a-4b81-b9ea-4349c4e00372",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx",
+                    "offset": 0
+                },
+                "title": "Untitled"
+            },
+            "section_id": "969d847d-842a-4b81-b9ea-4349c4e00372"
+        },
+        "id": "dnMuE5VRda7KTjFUE8Bx"
+    },
+    {
+        "source": "backend",
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-24 12:27:00.000",
+        "data": {
+            "summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the dates to month abbreviations, and renders a responsive line chart displaying the stock's closing prices over time using the Recharts library, complete with axes, tooltip, and legend.",
+            "selected_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n"
+        },
+        "id": "g6pvuzfNRHyBfWF97WDI"
+    },
+    {
+        "source": "frontend",
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-24 12:28:50.000",
+        "data": {
+            "instruction": "create a ReferenceLine in red using currentPrice of the stock",
+            "section_id": "969d847d-842a-4b81-b9ea-4349c4e00372"
+        },
+        "id": "nC9sazUskVXsKNVzOD8r"
+    },
+    {
+        "source": "backend",
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-24 12:28:52.000",
+        "data": {
+            "original_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "instruction": "create a ReferenceLine in red using currentPrice of the stock",
+            "updated_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  const currentPrice = data.currentPrice;\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n          <ReferenceLine y={currentPrice} stroke=\"red\" label=\"Current Price\" />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;"
+        },
+        "id": "tKooYhFOoqWSQhk01pmj"
+    },
+    {
+        "source": "frontend",
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-24 12:30:07.000",
+        "data": {},
+        "id": "tT4kE0Ey9mhTNUWSjK4i"
+    },
+    {
+        "source": "frontend",
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-24 12:30:18.000",
+        "data": {},
+        "id": "xsxYnBBaQir1piqNt2oH"
+    },
+    {
+        "source": "backend",
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-24 12:30:19.000",
+        "data": {
+            "summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the date and closing price for each data point, and renders a responsive line chart using Recharts to visualize the stock's price trend by month, displaying the company name and ticker above the chart.",
+            "selected_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n"
+        },
+        "id": "eZdqdv72ErViWqs37Z2W"
+    },
+    {
+        "source": "frontend",
+        "event": "create_new_section",
+        "timestamp": "2025-08-24 12:30:19.000",
+        "data": {
+            "section_data": {
+                "lines": [
+                    1,
+                    66
+                ],
+                "summaryData": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the date and closing price for each data point, and renders a responsive line chart using Recharts to visualize the stock's price trend by month, displaying the company name and ticker above the chart.",
+                "editPromptValue": "",
+                "createdAt": 1756067419000,
+                "metadata": {
+                    "originalCode": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+                    "id": "271356be-7cf5-4c1d-9af0-7e304a73648d",
+                    "filename": "StockChart.jsx",
+                    "fullPath": "/project/workspace/frontend/src/StockChart.jsx",
+                    "offset": 0
+                },
+                "title": "Untitled"
+            },
+            "section_id": "271356be-7cf5-4c1d-9af0-7e304a73648d"
+        },
+        "id": "w8XZedHCguQYiwVnCMGB"
+    },
+    {
+        "source": "frontend",
+        "event": "click_edit_in_prompt",
+        "timestamp": "2025-08-24 12:30:25.000",
+        "data": {
+            "summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the date and closing price for each data point, and renders a responsive line chart using Recharts to visualize the stock's price trend by month, displaying the company name and ticker above the chart.",
+            "section_id": "271356be-7cf5-4c1d-9af0-7e304a73648d"
+        },
+        "id": "2rRR4ue5f6AynBvlpCUV"
+    },
+    {
+        "source": "frontend",
+        "event": "commit_modified_summary",
+        "timestamp": "2025-08-24 12:30:57.000",
+        "data": {
+            "edited_summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the date and closing price for each data point, and renders a responsive line chart using Recharts to visualize the stock's price trend by month, displaying the company name and ticker above the chart, with a reference line in red displaying the current price.",
+            "original_summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the date and closing price for each data point, and renders a responsive line chart using Recharts to visualize the stock's price trend by month, displaying the company name and ticker above the chart.",
+            "section_id": "271356be-7cf5-4c1d-9af0-7e304a73648d"
+        },
+        "id": "zp88Xza39dssJacvrnnB"
+    },
+    {
+        "source": "backend",
+        "event": "modify_summary_mediation",
+        "timestamp": "2025-08-24 12:31:01.000",
+        "data": {
+            "original_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;\n",
+            "edited_summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the date and closing price for each data point, and renders a responsive line chart using Recharts to visualize the stock's price trend by month, displaying the company name and ticker above the chart, with a reference line in red displaying the current price.",
+            "original_summary": "This code defines a React functional component called StockChart that takes stock data as a prop, formats the date and closing price for each data point, and renders a responsive line chart using Recharts to visualize the stock's price trend by month, displaying the company name and ticker above the chart.",
+            "updated_code": "import React from \"react\";\nimport {\n  LineChart,\n  Line,\n  XAxis,\n  YAxis,\n  Tooltip,\n  Legend,\n  ResponsiveContainer,\n  ReferenceLine,\n} from \"recharts\";\n\nconst StockChart = ({ data }) => {\n  if (!data || !data.data || !data.data.length) return null;\n\n  const company = data.name;\n  const ticker = data.ticker;\n\n  const formatDateString = (date) => {\n    const monthNames = [\n      \"Jan\",\n      \"Feb\",\n      \"Mar\",\n      \"Apr\",\n      \"May\",\n      \"Jun\",\n      \"Jul\",\n      \"Aug\",\n      \"Sep\",\n      \"Oct\",\n      \"Nov\",\n      \"Dec\",\n    ];\n    const d = new Date(date);\n    return monthNames[d.getMonth()];\n  };\n\n  // Combine labels and values into an array of objects for Recharts\n  const chartData = data.data.map((item) => ({\n    date: formatDateString(item.date),\n    price: item.close,\n  }));\n\n  // Get the current price (last data point's close)\n  const currentPrice = data.data[data.data.length - 1].close;\n\n  return (\n    <div style={{ marginTop: \"2rem\" }}>\n      <h3>\n        {company} ({ticker})\n      </h3>\n      <ResponsiveContainer width=\"100%\" height={300}>\n        <LineChart\n          data={chartData}\n          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}\n        >\n          <XAxis dataKey=\"date\" />\n          <YAxis domain={[\"auto\", \"auto\"]} />\n          <Tooltip />\n          <Legend />\n          <ReferenceLine y={currentPrice} stroke=\"red\" strokeDasharray=\"3 3\" label=\"Current Price\" />\n          <Line type=\"monotone\" dataKey=\"price\" stroke=\"#8884d8\" dot={false} />\n        </LineChart>\n      </ResponsiveContainer>\n    </div>\n  );\n};\n\nexport default StockChart;"
+        },
+        "id": "hPctMf7lIknGYTsYDUFG"
+    }
+]

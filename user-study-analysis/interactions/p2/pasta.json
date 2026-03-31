@@ -1,0 +1,538 @@
+[
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:32:20.000",
+        "source": "frontend",
+        "data": {},
+        "id": "zVkNVx1q5vIFY5MnQMQI"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:32:22.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "883e9638-1a97-4f71-ac49-7042675e6c2a",
+            "section_data": {
+                "metadata": {
+                    "id": "883e9638-1a97-4f71-ac49-7042675e6c2a",
+                    "fullPath": "/project/workspace/scraper.py",
+                    "offset": 0,
+                    "filename": "scraper.py",
+                    "originalCode": "import pandas as pd\nimport os\n\n\ndef scrape_mvp_votes(start_year=2018, end_year=2025):\n    all_votes = []\n    for year in range(start_year, end_year + 1):\n        url = f\"https://www.basketball-reference.com/awards/awards_{year}.html\"\n        tables = pd.read_html(url, header=1)\n        try:\n            mvp_table = tables[0]  # MVP table is the first table\n            mvp_table[\"Year\"] = year\n            all_votes.append(mvp_table)\n        except:\n            print(f\"Could not parse year {year}\")\n\n    df = pd.concat(all_votes)\n    df = df.rename(columns={\"Player\": \"Name\", \"Pts Won\": \"MVP_Points\"})\n    return df[[\"Year\", \"Name\", \"MVP_Points\"]]\n\n\ndef scrape_season_stats(year):\n    base_url_reg = (\n        f\"https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html\"\n    )\n    df_reg = pd.read_html(base_url_reg, header=0)[0]\n    df_reg = df_reg[df_reg[\"Player\"] != \"Player\"]  # remove repeated header rows\n    df_reg[\"Year\"] = year\n\n    df_reg = df_reg[\n        [\"Player\", \"Year\", \"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    ]  # Keep only specified columns\n    df_reg = df_reg.dropna(\n        subset=[\"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    )  # Ensure key stats aren't invalid\n    return df_reg\n\n\ndef scrape_multiple_seasons(start_year=2018, end_year=2025):\n    all_stats = []\n    for year in range(start_year, end_year + 1):\n        df = scrape_season_stats(year)\n        all_stats.append(df)\n    return pd.concat(all_stats)\n\n\nif __name__ == \"__main__\":\n    if not os.path.exists(\"data\"):\n        os.makedirs(\"data\")\n\n    print(\"Scraping MVP votes...\")\n    mvp_df = scrape_mvp_votes()\n    mvp_df.to_csv(\"data/mvp_votes.csv\", index=False)\n\n    print(\"Scraping player stats...\")\n    stats_df = scrape_multiple_seasons()\n    stats_df.to_csv(\"data/season_stats.csv\", index=False)\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755412342000,
+                "summaryData": "This code defines functions to scrape NBA MVP voting results and player per-game statistics from Basketball Reference for the years 2018 to 2025, processes and combines the data into pandas DataFrames, and, when run as a script, saves the compiled MVP votes and player stats as CSV files in a \"data\" directory.",
+                "lines": [
+                    1,
+                    58
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "2W7joESpNuzwwI0qa1Q8"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:32:22.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "import pandas as pd\nimport os\n\n\ndef scrape_mvp_votes(start_year=2018, end_year=2025):\n    all_votes = []\n    for year in range(start_year, end_year + 1):\n        url = f\"https://www.basketball-reference.com/awards/awards_{year}.html\"\n        tables = pd.read_html(url, header=1)\n        try:\n            mvp_table = tables[0]  # MVP table is the first table\n            mvp_table[\"Year\"] = year\n            all_votes.append(mvp_table)\n        except:\n            print(f\"Could not parse year {year}\")\n\n    df = pd.concat(all_votes)\n    df = df.rename(columns={\"Player\": \"Name\", \"Pts Won\": \"MVP_Points\"})\n    return df[[\"Year\", \"Name\", \"MVP_Points\"]]\n\n\ndef scrape_season_stats(year):\n    base_url_reg = (\n        f\"https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html\"\n    )\n    df_reg = pd.read_html(base_url_reg, header=0)[0]\n    df_reg = df_reg[df_reg[\"Player\"] != \"Player\"]  # remove repeated header rows\n    df_reg[\"Year\"] = year\n\n    df_reg = df_reg[\n        [\"Player\", \"Year\", \"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    ]  # Keep only specified columns\n    df_reg = df_reg.dropna(\n        subset=[\"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    )  # Ensure key stats aren't invalid\n    return df_reg\n\n\ndef scrape_multiple_seasons(start_year=2018, end_year=2025):\n    all_stats = []\n    for year in range(start_year, end_year + 1):\n        df = scrape_season_stats(year)\n        all_stats.append(df)\n    return pd.concat(all_stats)\n\n\nif __name__ == \"__main__\":\n    if not os.path.exists(\"data\"):\n        os.makedirs(\"data\")\n\n    print(\"Scraping MVP votes...\")\n    mvp_df = scrape_mvp_votes()\n    mvp_df.to_csv(\"data/mvp_votes.csv\", index=False)\n\n    print(\"Scraping player stats...\")\n    stats_df = scrape_multiple_seasons()\n    stats_df.to_csv(\"data/season_stats.csv\", index=False)\n",
+            "summary": "This code defines functions to scrape NBA MVP voting results and player per-game statistics from Basketball Reference for the years 2018 to 2025, processes and combines the data into pandas DataFrames, and, when run as a script, saves the compiled MVP votes and player stats as CSV files in a \"data\" directory."
+        },
+        "id": "XOL8n4ZWBHmsjHHIZjNG"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:33:49.000",
+        "source": "frontend",
+        "data": {},
+        "id": "WYAEa7xRv3yEb02bCoJO"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:33:52.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "8551ae91-339d-4c5a-9a35-f7e93770ee0d",
+            "section_data": {
+                "metadata": {
+                    "id": "8551ae91-339d-4c5a-9a35-f7e93770ee0d",
+                    "fullPath": "/project/workspace/preprocess.py",
+                    "offset": 0,
+                    "filename": "preprocess.py",
+                    "originalCode": "import pandas as pd\n\n\ndef load_and_merge(mvp_path=\"data/mvp_votes.csv\", stats_path=\"data/season_stats.csv\"):\n    mvp_df = pd.read_csv(mvp_path)\n    stats_df = pd.read_csv(stats_path)\n\n    # Normalize names\n    mvp_df[\"Name\"] = mvp_df[\"Name\"].str.strip()\n    stats_df[\"Player\"] = stats_df[\"Player\"].str.strip()\n\n    # Merge on name + year\n    merged = pd.merge(\n        mvp_df,\n        stats_df,\n        left_on=[\"Name\", \"Year\"],\n        right_on=[\"Player\", \"Year\"],\n        how=\"left\",\n    )\n\n    # Drop unnecessary columns\n    drop_cols = [\"Rk\", \"Player\", \"Pos\", \"Tm_y\"]\n    merged.drop(\n        columns=[col for col in drop_cols if col in merged.columns], inplace=True\n    )\n\n    # Clean numeric columns\n    for col in merged.columns:\n        if merged[col].dtype == \"object\":\n            try:\n                merged[col] = merged[col].astype(float)\n            except:\n                pass\n\n    # Assign ordinal MVP rank (1 = MVP)\n    merged[\"Rank\"] = merged.groupby(\"Year\")[\"MVP_Points\"].rank(\n        ascending=False, method=\"first\"\n    )\n\n    return merged\n\n\nif __name__ == \"__main__\":\n    df = load_and_merge()\n    df.to_csv(\"data/merged_data.csv\", index=False)\n    print(\"Merged data saved to data/merged_data.csv\")\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755412432000,
+                "summaryData": "This code defines a function to load MVP voting and season statistics CSV files, normalize and merge them by player name and year, clean and convert relevant columns, assign ordinal MVP ranks per year, and then saves the merged dataset to a new CSV file when run as a script.",
+                "lines": [
+                    1,
+                    47
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "PJVO9fqiskslELkgh7qn"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:33:52.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "import pandas as pd\n\n\ndef load_and_merge(mvp_path=\"data/mvp_votes.csv\", stats_path=\"data/season_stats.csv\"):\n    mvp_df = pd.read_csv(mvp_path)\n    stats_df = pd.read_csv(stats_path)\n\n    # Normalize names\n    mvp_df[\"Name\"] = mvp_df[\"Name\"].str.strip()\n    stats_df[\"Player\"] = stats_df[\"Player\"].str.strip()\n\n    # Merge on name + year\n    merged = pd.merge(\n        mvp_df,\n        stats_df,\n        left_on=[\"Name\", \"Year\"],\n        right_on=[\"Player\", \"Year\"],\n        how=\"left\",\n    )\n\n    # Drop unnecessary columns\n    drop_cols = [\"Rk\", \"Player\", \"Pos\", \"Tm_y\"]\n    merged.drop(\n        columns=[col for col in drop_cols if col in merged.columns], inplace=True\n    )\n\n    # Clean numeric columns\n    for col in merged.columns:\n        if merged[col].dtype == \"object\":\n            try:\n                merged[col] = merged[col].astype(float)\n            except:\n                pass\n\n    # Assign ordinal MVP rank (1 = MVP)\n    merged[\"Rank\"] = merged.groupby(\"Year\")[\"MVP_Points\"].rank(\n        ascending=False, method=\"first\"\n    )\n\n    return merged\n\n\nif __name__ == \"__main__\":\n    df = load_and_merge()\n    df.to_csv(\"data/merged_data.csv\", index=False)\n    print(\"Merged data saved to data/merged_data.csv\")\n",
+            "summary": "This code defines a function to load MVP voting and season statistics CSV files, normalize and merge them by player name and year, clean and convert relevant columns, assign ordinal MVP ranks per year, and then saves the merged dataset to a new CSV file when run as a script."
+        },
+        "id": "tegFmivnqosg1SEygkp6"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:35:32.000",
+        "source": "frontend",
+        "data": {},
+        "id": "bH1QjfLBzcyhlQjogQz9"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:35:33.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "0f766e05-e7d6-402b-b278-18f44a379881",
+            "section_data": {
+                "metadata": {
+                    "id": "0f766e05-e7d6-402b-b278-18f44a379881",
+                    "fullPath": "/project/workspace/scraper.py",
+                    "offset": 652,
+                    "filename": "scraper.py",
+                    "originalCode": "def scrape_season_stats(year):\n    base_url_reg = (\n        f\"https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html\"\n    )\n    df_reg = pd.read_html(base_url_reg, header=0)[0]\n    df_reg = df_reg[df_reg[\"Player\"] != \"Player\"]  # remove repeated header rows\n    df_reg[\"Year\"] = year\n\n    df_reg = df_reg[\n        [\"Player\", \"Year\", \"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    ]  # Keep only specified columns\n    df_reg = df_reg.dropna(\n        subset=[\"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    )  # Ensure key stats aren't invalid\n    return df_reg\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755412533000,
+                "summaryData": "The scrape_season_stats function retrieves per-game NBA player statistics for a specified year from Basketball Reference, filters the data to include only selected columns (Player, Year, PTS, AST, TRB, FG%), removes rows with missing key statistics, and returns the cleaned DataFrame.",
+                "lines": [
+                    22,
+                    37
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "8pOAgK6wQxc8A97pDXCP"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:35:33.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "def scrape_season_stats(year):\n    base_url_reg = (\n        f\"https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html\"\n    )\n    df_reg = pd.read_html(base_url_reg, header=0)[0]\n    df_reg = df_reg[df_reg[\"Player\"] != \"Player\"]  # remove repeated header rows\n    df_reg[\"Year\"] = year\n\n    df_reg = df_reg[\n        [\"Player\", \"Year\", \"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    ]  # Keep only specified columns\n    df_reg = df_reg.dropna(\n        subset=[\"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    )  # Ensure key stats aren't invalid\n    return df_reg\n",
+            "summary": "The scrape_season_stats function retrieves per-game NBA player statistics for a specified year from Basketball Reference, filters the data to include only selected columns (Player, Year, PTS, AST, TRB, FG%), removes rows with missing key statistics, and returns the cleaned DataFrame."
+        },
+        "id": "RoM4urvY3McEUxMNH3ch"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-17 10:36:29.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "0f766e05-e7d6-402b-b278-18f44a379881",
+            "instruction": "Now I want to scrape the advanced data instead of basic (`per_game`) data.\nThe URL of advanced data is `https://www.basketball-reference.com/leagues/NBA_2025_advanced.html`\nPlease change the code so that it scrapes advanced data."
+        },
+        "id": "oEPpcXVBRCi4HS4Q1Fef"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-17 10:36:31.000",
+        "source": "backend",
+        "data": {
+            "instruction": "Now I want to scrape the advanced data instead of basic (`per_game`) data.\nThe URL of advanced data is `https://www.basketball-reference.com/leagues/NBA_2025_advanced.html`\nPlease change the code so that it scrapes advanced data.",
+            "original_code": "def scrape_season_stats(year):\n    base_url_reg = (\n        f\"https://www.basketball-reference.com/leagues/NBA_{year}_per_game.html\"\n    )\n    df_reg = pd.read_html(base_url_reg, header=0)[0]\n    df_reg = df_reg[df_reg[\"Player\"] != \"Player\"]  # remove repeated header rows\n    df_reg[\"Year\"] = year\n\n    df_reg = df_reg[\n        [\"Player\", \"Year\", \"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    ]  # Keep only specified columns\n    df_reg = df_reg.dropna(\n        subset=[\"PTS\", \"AST\", \"TRB\", \"FG%\"]\n    )  # Ensure key stats aren't invalid\n    return df_reg\n",
+            "updated_code": "def scrape_season_stats(year):\n    base_url_adv = (\n        f\"https://www.basketball-reference.com/leagues/NBA_{year}_advanced.html\"\n    )\n    df_adv = pd.read_html(base_url_adv, header=0)[0]\n    df_adv = df_adv[df_adv[\"Player\"] != \"Player\"]  # remove repeated header rows\n    df_adv[\"Year\"] = year\n\n    df_adv = df_adv[\n        [\"Player\", \"Year\", \"PER\", \"TS%\", \"USG%\", \"WS\"]\n    ]  # Keep only specified columns\n    df_adv = df_adv.dropna(\n        subset=[\"PER\", \"TS%\", \"USG%\", \"WS\"]\n    )  # Ensure key stats aren't invalid\n    return df_adv"
+        },
+        "id": "mP1gkCxochC0NcwzxQvx"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:38:19.000",
+        "source": "frontend",
+        "data": {},
+        "id": "Yqdlc9BdDuKvElknnipi"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:38:21.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "ec7067be-9150-416f-81be-6e3e4c6b5880",
+            "section_data": {
+                "metadata": {
+                    "id": "ec7067be-9150-416f-81be-6e3e4c6b5880",
+                    "fullPath": "/project/workspace/rank_model.py",
+                    "offset": 0,
+                    "filename": "rank_model.py",
+                    "originalCode": "import pandas as pd\nfrom xgboost import XGBRanker\nfrom sklearn.metrics import ndcg_score\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n\ndef load_data(path=\"data/merged_data.csv\"):\n    df = pd.read_csv(path)\n\n    # Features to use\n    feature_cols = [\n        \"PTS\",\n        \"AST\",\n        \"TRB\",\n        \"FG%\",\n        \"BPM\",\n        \"WS/48\",\n        \"TS%\",\n        \"VORP\",\n        \"WS\",\n        \"PER\",\n    ]\n    feature_cols = [\n        col for col in feature_cols if col in df.columns\n    ]  # only keep existing features\n    df = df.dropna(subset=feature_cols + [\"Rank\"])\n\n    # Sort by Year and Rank for consistency\n    df = df.sort_values(by=[\"Year\", \"Rank\"])\n\n    X = df[feature_cols]\n    y = df[\"Rank\"]\n    groups = df.groupby(\"Year\").size().to_numpy()\n\n    return X, y, groups, df\n\n\ndef evaluate_ndcg(y_true, y_pred, group_sizes):\n    scores = []\n    start = 0\n    for size in group_sizes:\n        true_ranks = y_true[start : start + size]\n        true_relevance = (max(true_ranks) + 1) - true_ranks\n        pred_scores = y_pred[start : start + size]\n        scores.append(ndcg_score([true_relevance], [pred_scores]))\n        start += size\n    return np.mean(scores)\n\n\ndef plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"Name\", palette=\"coolwarm\")\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n\n\ndef main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    # Model\n    model = XGBRanker(\n        objective=\"rank:pairwise\",\n        learning_rate=0.1,\n        n_estimators=100,\n        max_depth=4,\n        random_state=42,\n    )\n\n    print(\"Training XGBoostRanker...\")\n    model.fit(X_train, y_train, group=train_groups)\n\n    # Predict, sort, and evaluate\n    y_pred = model.predict(X_test)\n    df.loc[test_idx, \"PredictedScore\"] = y_pred\n    df.loc[test_idx, \"PredictedRank\"] = (\n        df.loc[test_idx]\n        .groupby(\"Year\")[\"PredictedScore\"]\n        .rank(ascending=False, method=\"first\")\n    )\n\n    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n    print(f\"NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}\")\n\n    # Show results\n    print(df[test_idx][[\"Year\", \"Name\", \"Rank\", \"PredictedScore\", \"PredictedRank\"]])\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n\n\nif __name__ == \"__main__\":\n    main()\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755412701000,
+                "summaryData": "This code loads basketball player data, trains an XGBoost ranking model to predict MVP rankings based on player statistics, evaluates the model using NDCG scores, and visualizes prediction errors for recent years.",
+                "lines": [
+                    1,
+                    126
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "Ft9vXOe8eqwzVNEMRw6g"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:38:21.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "import pandas as pd\nfrom xgboost import XGBRanker\nfrom sklearn.metrics import ndcg_score\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n\ndef load_data(path=\"data/merged_data.csv\"):\n    df = pd.read_csv(path)\n\n    # Features to use\n    feature_cols = [\n        \"PTS\",\n        \"AST\",\n        \"TRB\",\n        \"FG%\",\n        \"BPM\",\n        \"WS/48\",\n        \"TS%\",\n        \"VORP\",\n        \"WS\",\n        \"PER\",\n    ]\n    feature_cols = [\n        col for col in feature_cols if col in df.columns\n    ]  # only keep existing features\n    df = df.dropna(subset=feature_cols + [\"Rank\"])\n\n    # Sort by Year and Rank for consistency\n    df = df.sort_values(by=[\"Year\", \"Rank\"])\n\n    X = df[feature_cols]\n    y = df[\"Rank\"]\n    groups = df.groupby(\"Year\").size().to_numpy()\n\n    return X, y, groups, df\n\n\ndef evaluate_ndcg(y_true, y_pred, group_sizes):\n    scores = []\n    start = 0\n    for size in group_sizes:\n        true_ranks = y_true[start : start + size]\n        true_relevance = (max(true_ranks) + 1) - true_ranks\n        pred_scores = y_pred[start : start + size]\n        scores.append(ndcg_score([true_relevance], [pred_scores]))\n        start += size\n    return np.mean(scores)\n\n\ndef plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"Name\", palette=\"coolwarm\")\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n\n\ndef main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    # Model\n    model = XGBRanker(\n        objective=\"rank:pairwise\",\n        learning_rate=0.1,\n        n_estimators=100,\n        max_depth=4,\n        random_state=42,\n    )\n\n    print(\"Training XGBoostRanker...\")\n    model.fit(X_train, y_train, group=train_groups)\n\n    # Predict, sort, and evaluate\n    y_pred = model.predict(X_test)\n    df.loc[test_idx, \"PredictedScore\"] = y_pred\n    df.loc[test_idx, \"PredictedRank\"] = (\n        df.loc[test_idx]\n        .groupby(\"Year\")[\"PredictedScore\"]\n        .rank(ascending=False, method=\"first\")\n    )\n\n    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n    print(f\"NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}\")\n\n    # Show results\n    print(df[test_idx][[\"Year\", \"Name\", \"Rank\", \"PredictedScore\", \"PredictedRank\"]])\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+            "summary": "This code loads basketball player data, trains an XGBoost ranking model to predict MVP rankings based on player statistics, evaluates the model using NDCG scores, and visualizes prediction errors for recent years."
+        },
+        "id": "oiW2uM84F5SScPZJ3QAp"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:39:04.000",
+        "source": "frontend",
+        "data": {},
+        "id": "pPTbMKVae5MsigtkEtyF"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:39:06.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    # Model\n    model = XGBRanker(\n        objective=\"rank:pairwise\",\n        learning_rate=0.1,\n        n_estimators=100,\n        max_depth=4,\n        random_state=42,\n    )\n\n    print(\"Training XGBoostRanker...\")\n    model.fit(X_train, y_train, group=train_groups)\n\n    # Predict, sort, and evaluate\n    y_pred = model.predict(X_test)\n    df.loc[test_idx, \"PredictedScore\"] = y_pred\n    df.loc[test_idx, \"PredictedRank\"] = (\n        df.loc[test_idx]\n        .groupby(\"Year\")[\"PredictedScore\"]\n        .rank(ascending=False, method=\"first\")\n    )\n\n    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n    print(f\"NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}\")\n\n    # Show results\n    print(df[test_idx][[\"Year\", \"Name\", \"Rank\", \"PredictedScore\", \"PredictedRank\"]])\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n",
+            "summary": "The main() function loads player ranking data, splits it into training and test sets by year, trains an XGBoost ranking model on the training data, predicts and ranks players for the test years, evaluates the model using the NDCG metric, prints the results, and generates plots of prediction errors for the test years."
+        },
+        "id": "bnIQXPA7MNNcW16NmVxK"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:39:06.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "a3ee79bb-465c-40fe-be70-9e6a001e42f0",
+            "section_data": {
+                "metadata": {
+                    "id": "a3ee79bb-465c-40fe-be70-9e6a001e42f0",
+                    "fullPath": "/project/workspace/rank_model.py",
+                    "offset": 1952,
+                    "filename": "rank_model.py",
+                    "originalCode": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    # Model\n    model = XGBRanker(\n        objective=\"rank:pairwise\",\n        learning_rate=0.1,\n        n_estimators=100,\n        max_depth=4,\n        random_state=42,\n    )\n\n    print(\"Training XGBoostRanker...\")\n    model.fit(X_train, y_train, group=train_groups)\n\n    # Predict, sort, and evaluate\n    y_pred = model.predict(X_test)\n    df.loc[test_idx, \"PredictedScore\"] = y_pred\n    df.loc[test_idx, \"PredictedRank\"] = (\n        df.loc[test_idx]\n        .groupby(\"Year\")[\"PredictedScore\"]\n        .rank(ascending=False, method=\"first\")\n    )\n\n    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n    print(f\"NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}\")\n\n    # Show results\n    print(df[test_idx][[\"Year\", \"Name\", \"Rank\", \"PredictedScore\", \"PredictedRank\"]])\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755412746000,
+                "summaryData": "The main() function loads player ranking data, splits it into training and test sets by year, trains an XGBoost ranking model on the training data, predicts and ranks players for the test years, evaluates the model using the NDCG metric, prints the results, and generates plots of prediction errors for the test years.",
+                "lines": [
+                    74,
+                    122
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "h7OJ7X2uakaJaaxF2vCU"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:42:26.000",
+        "source": "frontend",
+        "data": {},
+        "id": "BMUfnW1rwkRrazhN7ff8"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:42:28.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "9cc61c4b-bc47-4b0d-81ae-4b7b321d62e3",
+            "section_data": {
+                "metadata": {
+                    "id": "9cc61c4b-bc47-4b0d-81ae-4b7b321d62e3",
+                    "fullPath": "/project/workspace/rank_model.py",
+                    "offset": 1952,
+                    "filename": "rank_model.py",
+                    "originalCode": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    # Model\n    model = XGBRanker(\n        objective=\"rank:pairwise\",\n        learning_rate=0.1,\n        n_estimators=2000,\n        max_depth=4,\n        random_state=42,\n    )\n\n    print(\"Training XGBoostRanker...\")\n    model.fit(X_train, y_train, group=train_groups)\n\n    # Predict, sort, and evaluate\n    y_pred = model.predict(X_test)\n    df.loc[test_idx, \"PredictedScore\"] = y_pred\n    df.loc[test_idx, \"PredictedRank\"] = (\n        df.loc[test_idx]\n        .groupby(\"Year\")[\"PredictedScore\"]\n        .rank(ascending=False, method=\"first\")\n    )\n\n    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n    print(f\"NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}\")\n\n    # Show results\n    print(df[test_idx][[\"Year\", \"Name\", \"Rank\", \"PredictedScore\", \"PredictedRank\"]])\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755412948000,
+                "summaryData": "The main() function loads the dataset, splits it into training and test sets based on years, trains an XGBoost ranking model on the training data, predicts and ranks the test data, evaluates the model using NDCG score, displays the prediction results, and generates plots of ranking prediction errors for the test years.",
+                "lines": [
+                    74,
+                    122
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "pmS2kem5WZr6yBbDy9QY"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:42:28.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    # Model\n    model = XGBRanker(\n        objective=\"rank:pairwise\",\n        learning_rate=0.1,\n        n_estimators=2000,\n        max_depth=4,\n        random_state=42,\n    )\n\n    print(\"Training XGBoostRanker...\")\n    model.fit(X_train, y_train, group=train_groups)\n\n    # Predict, sort, and evaluate\n    y_pred = model.predict(X_test)\n    df.loc[test_idx, \"PredictedScore\"] = y_pred\n    df.loc[test_idx, \"PredictedRank\"] = (\n        df.loc[test_idx]\n        .groupby(\"Year\")[\"PredictedScore\"]\n        .rank(ascending=False, method=\"first\")\n    )\n\n    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n    print(f\"NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}\")\n\n    # Show results\n    print(df[test_idx][[\"Year\", \"Name\", \"Rank\", \"PredictedScore\", \"PredictedRank\"]])\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n",
+            "summary": "The main() function loads the dataset, splits it into training and test sets based on years, trains an XGBoost ranking model on the training data, predicts and ranks the test data, evaluates the model using NDCG score, displays the prediction results, and generates plots of ranking prediction errors for the test years."
+        },
+        "id": "sdUGrspjIkAjCAwsOo97"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-17 10:44:43.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "9cc61c4b-bc47-4b0d-81ae-4b7b321d62e3",
+            "instruction": "Now I want to test which `n_estimators` parameter is best for XGBRanker and choose from `100, 1000, 2000`. Please change the function, so that I can see the results of different `n_estimators` and choose from them."
+        },
+        "id": "4S1uwJsBuh94169rpIFF"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-17 10:44:48.000",
+        "source": "backend",
+        "data": {
+            "instruction": "Now I want to test which `n_estimators` parameter is best for XGBRanker and choose from `100, 1000, 2000`. Please change the function, so that I can see the results of different `n_estimators` and choose from them.",
+            "original_code": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    # Model\n    model = XGBRanker(\n        objective=\"rank:pairwise\",\n        learning_rate=0.1,\n        n_estimators=2000,\n        max_depth=4,\n        random_state=42,\n    )\n\n    print(\"Training XGBoostRanker...\")\n    model.fit(X_train, y_train, group=train_groups)\n\n    # Predict, sort, and evaluate\n    y_pred = model.predict(X_test)\n    df.loc[test_idx, \"PredictedScore\"] = y_pred\n    df.loc[test_idx, \"PredictedRank\"] = (\n        df.loc[test_idx]\n        .groupby(\"Year\")[\"PredictedScore\"]\n        .rank(ascending=False, method=\"first\")\n    )\n\n    ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n    print(f\"NDCG Score on test years {test_years.tolist()}: {ndcg:.4f}\")\n\n    # Show results\n    print(df[test_idx][[\"Year\", \"Name\", \"Rank\", \"PredictedScore\", \"PredictedRank\"]])\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n",
+            "updated_code": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    n_estimators_list = [100, 1000, 2000]\n    ndcg_scores = {}\n\n    for n_estimators in n_estimators_list:\n        # Model\n        model = XGBRanker(\n            objective=\"rank:pairwise\",\n            learning_rate=0.1,\n            n_estimators=n_estimators,\n            max_depth=4,\n            random_state=42,\n        )\n\n        print(f\"\\nTraining XGBoostRanker with n_estimators={n_estimators}...\")\n        model.fit(X_train, y_train, group=train_groups)\n\n        # Predict, sort, and evaluate\n        y_pred = model.predict(X_test)\n        df.loc[test_idx, f\"PredictedScore_{n_estimators}\"] = y_pred\n        df.loc[test_idx, f\"PredictedRank_{n_estimators}\"] = (\n            df.loc[test_idx]\n            .groupby(\"Year\")[f\"PredictedScore_{n_estimators}\"]\n            .rank(ascending=False, method=\"first\")\n        )\n\n        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n        ndcg_scores[n_estimators] = ndcg\n        print(f\"NDCG Score on test years {test_years.tolist()} (n_estimators={n_estimators}): {ndcg:.4f}\")\n\n        # Show results\n        print(df[test_idx][[\"Year\", \"Name\", \"Rank\", f\"PredictedScore_{n_estimators}\", f\"PredictedRank_{n_estimators}\"]])\n\n    # Optionally, plot for the best n_estimators\n    best_n = max(ndcg_scores, key=ndcg_scores.get)\n    print(f\"\\nBest n_estimators based on NDCG: {best_n} (NDCG={ndcg_scores[best_n]:.4f})\")\n    # For plotting, copy the best predictions to 'PredictedRank' column\n    df.loc[test_idx, \"PredictedRank\"] = df.loc[test_idx, f\"PredictedRank_{best_n}\"]\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)"
+        },
+        "id": "vHopWTy1M8oMZvLQbujM"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:45:35.000",
+        "source": "frontend",
+        "data": {},
+        "id": "5gUNayWrplQniqqVTFHm"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:45:37.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    n_estimators_list = [100, 1000, 2000]\n    ndcg_scores = {}\n\n    for n_estimators in n_estimators_list:\n        # Model\n        model = XGBRanker(\n            objective=\"rank:pairwise\",\n            learning_rate=0.1,\n            n_estimators=n_estimators,\n            max_depth=4,\n            random_state=42,\n        )\n\n        print(f\"\\nTraining XGBoostRanker with n_estimators={n_estimators}...\")\n        model.fit(X_train, y_train, group=train_groups)\n\n        # Predict, sort, and evaluate\n        y_pred = model.predict(X_test)\n        df.loc[test_idx, f\"PredictedScore_{n_estimators}\"] = y_pred\n        df.loc[test_idx, f\"PredictedRank_{n_estimators}\"] = (\n            df.loc[test_idx]\n            .groupby(\"Year\")[f\"PredictedScore_{n_estimators}\"]\n            .rank(ascending=False, method=\"first\")\n        )\n\n        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n        ndcg_scores[n_estimators] = ndcg\n        print(f\"NDCG Score on test years {test_years.tolist()} (n_estimators={n_estimators}): {ndcg:.4f}\")\n\n        # Show results\n        print(df[test_idx][[\"Year\", \"Name\", \"Rank\", f\"PredictedScore_{n_estimators}\", f\"PredictedRank_{n_estimators}\"]])\n\n    # Optionally, plot for the best n_estimators\n    best_n = max(ndcg_scores, key=ndcg_scores.get)\n    print(f\"\\nBest n_estimators based on NDCG: {best_n} (NDCG={ndcg_scores[best_n]:.4f})\")\n    # For plotting, copy the best predictions to 'PredictedRank' column\n    df.loc[test_idx, \"PredictedRank\"] = df.loc[test_idx, f\"PredictedRank_{best_n}\"]\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)",
+            "summary": "The main() function loads player ranking data, splits it into training and test sets by year, trains multiple XGBoost ranking models with different numbers of estimators, evaluates their performance using NDCG scores, selects the best model, and generates plots comparing predicted and true ranks for the test years 2024 and 2025."
+        },
+        "id": "BjJ4uVkqwF3q3xjscFBW"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:45:37.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "cb5a031d-39ab-47a9-9df3-6321f97c6117",
+            "section_data": {
+                "metadata": {
+                    "id": "cb5a031d-39ab-47a9-9df3-6321f97c6117",
+                    "fullPath": "/project/workspace/rank_model.py",
+                    "offset": 1952,
+                    "filename": "rank_model.py",
+                    "originalCode": "def main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    n_estimators_list = [100, 1000, 2000]\n    ndcg_scores = {}\n\n    for n_estimators in n_estimators_list:\n        # Model\n        model = XGBRanker(\n            objective=\"rank:pairwise\",\n            learning_rate=0.1,\n            n_estimators=n_estimators,\n            max_depth=4,\n            random_state=42,\n        )\n\n        print(f\"\\nTraining XGBoostRanker with n_estimators={n_estimators}...\")\n        model.fit(X_train, y_train, group=train_groups)\n\n        # Predict, sort, and evaluate\n        y_pred = model.predict(X_test)\n        df.loc[test_idx, f\"PredictedScore_{n_estimators}\"] = y_pred\n        df.loc[test_idx, f\"PredictedRank_{n_estimators}\"] = (\n            df.loc[test_idx]\n            .groupby(\"Year\")[f\"PredictedScore_{n_estimators}\"]\n            .rank(ascending=False, method=\"first\")\n        )\n\n        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n        ndcg_scores[n_estimators] = ndcg\n        print(f\"NDCG Score on test years {test_years.tolist()} (n_estimators={n_estimators}): {ndcg:.4f}\")\n\n        # Show results\n        print(df[test_idx][[\"Year\", \"Name\", \"Rank\", f\"PredictedScore_{n_estimators}\", f\"PredictedRank_{n_estimators}\"]])\n\n    # Optionally, plot for the best n_estimators\n    best_n = max(ndcg_scores, key=ndcg_scores.get)\n    print(f\"\\nBest n_estimators based on NDCG: {best_n} (NDCG={ndcg_scores[best_n]:.4f})\")\n    # For plotting, copy the best predictions to 'PredictedRank' column\n    df.loc[test_idx, \"PredictedRank\"] = df.loc[test_idx, f\"PredictedRank_{best_n}\"]\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)"
+                },
+                "title": "Untitled",
+                "createdAt": 1755413137000,
+                "summaryData": "The main() function loads player ranking data, splits it into training and test sets by year, trains multiple XGBoost ranking models with different numbers of estimators, evaluates their performance using NDCG scores, selects the best model, and generates plots comparing predicted and true ranks for the test years 2024 and 2025.",
+                "lines": [
+                    74,
+                    132
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "vJVxrGnijDYNBQ4YjFJc"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:48:16.000",
+        "source": "frontend",
+        "data": {},
+        "id": "WBCy4hHvII019w7LyPhJ"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:48:18.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "5a1527b1-ac6e-4925-b11a-0d88526ff8fd",
+            "section_data": {
+                "metadata": {
+                    "id": "5a1527b1-ac6e-4925-b11a-0d88526ff8fd",
+                    "fullPath": "/project/workspace/rank_model.py",
+                    "offset": 1205,
+                    "filename": "rank_model.py",
+                    "originalCode": "def plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"Name\", palette=\"coolwarm\")\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755413298000,
+                "summaryData": "The plot_ranking_predictions function generates and saves a bar plot visualizing the prediction errors (difference between predicted and true ranks) for each player in a specified year, highlighting how well the model's predicted rankings match the actual rankings.",
+                "lines": [
+                    52,
+                    72
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "1n0pxFes4G2Tc24CcaJP"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:48:18.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "def plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"Name\", palette=\"coolwarm\")\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n",
+            "summary": "The plot_ranking_predictions function generates and saves a bar plot visualizing the prediction errors (difference between predicted and true ranks) for each player in a specified year, highlighting how well the model's predicted rankings match the actual rankings."
+        },
+        "id": "G2Y3gSWM5SFELvOGvTgp"
+    },
+    {
+        "event": "commit_direct_instruction",
+        "timestamp": "2025-08-17 10:53:42.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "5a1527b1-ac6e-4925-b11a-0d88526ff8fd",
+            "instruction": "Now that the code generates a regular bar chart, but I want to generate a grouped bar chart. Please locate the corresponding code, and change the chart type it generates."
+        },
+        "id": "DxnC7cyPR3jFGu5hEa84"
+    },
+    {
+        "event": "modify_direct_instruction",
+        "timestamp": "2025-08-17 10:53:46.000",
+        "source": "backend",
+        "data": {
+            "instruction": "Now that the code generates a regular bar chart, but I want to generate a grouped bar chart. Please locate the corresponding code, and change the chart type it generates.",
+            "original_code": "def plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"Name\", palette=\"coolwarm\")\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n",
+            "updated_code": "def plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"PredictedRank\", palette=\"coolwarm\", dodge=True)\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")"
+        },
+        "id": "CBy5sStAD9sXFdZFjC1K"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:56:41.000",
+        "source": "frontend",
+        "data": {},
+        "id": "IVlzHpXiUsKTWO2q60dQ"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:56:43.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "e7d0d9ed-fd38-44b9-a3ae-fc82fe1c60e3",
+            "section_data": {
+                "metadata": {
+                    "id": "e7d0d9ed-fd38-44b9-a3ae-fc82fe1c60e3",
+                    "fullPath": "/project/workspace/rank_model.py",
+                    "offset": 0,
+                    "filename": "rank_model.py",
+                    "originalCode": "import pandas as pd\nfrom xgboost import XGBRanker\nfrom sklearn.metrics import ndcg_score\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n\ndef load_data(path=\"data/merged_data.csv\"):\n    df = pd.read_csv(path)\n\n    # Features to use\n    feature_cols = [\n        \"PTS\",\n        \"AST\",\n        \"TRB\",\n        \"FG%\",\n        \"BPM\",\n        \"WS/48\",\n        \"TS%\",\n        \"VORP\",\n        \"WS\",\n        \"PER\",\n    ]\n    feature_cols = [\n        col for col in feature_cols if col in df.columns\n    ]  # only keep existing features\n    df = df.dropna(subset=feature_cols + [\"Rank\"])\n\n    # Sort by Year and Rank for consistency\n    df = df.sort_values(by=[\"Year\", \"Rank\"])\n\n    X = df[feature_cols]\n    y = df[\"Rank\"]\n    groups = df.groupby(\"Year\").size().to_numpy()\n\n    return X, y, groups, df\n\n\ndef evaluate_ndcg(y_true, y_pred, group_sizes):\n    scores = []\n    start = 0\n    for size in group_sizes:\n        true_ranks = y_true[start : start + size]\n        true_relevance = (max(true_ranks) + 1) - true_ranks\n        pred_scores = y_pred[start : start + size]\n        scores.append(ndcg_score([true_relevance], [pred_scores]))\n        start += size\n    return np.mean(scores)\n\n\ndef plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"PredictedRank\", palette=\"coolwarm\", dodge=True)\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n\ndef main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    n_estimators_list = [100, 1000, 2000]\n    ndcg_scores = {}\n\n    for n_estimators in n_estimators_list:\n        # Model\n        model = XGBRanker(\n            objective=\"rank:pairwise\",\n            learning_rate=0.1,\n            n_estimators=n_estimators,\n            max_depth=4,\n            random_state=42,\n        )\n\n        print(f\"\\nTraining XGBoostRanker with n_estimators={n_estimators}...\")\n        model.fit(X_train, y_train, group=train_groups)\n\n        # Predict, sort, and evaluate\n        y_pred = model.predict(X_test)\n        df.loc[test_idx, f\"PredictedScore_{n_estimators}\"] = y_pred\n        df.loc[test_idx, f\"PredictedRank_{n_estimators}\"] = (\n            df.loc[test_idx]\n            .groupby(\"Year\")[f\"PredictedScore_{n_estimators}\"]\n            .rank(ascending=False, method=\"first\")\n        )\n\n        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n        ndcg_scores[n_estimators] = ndcg\n        print(f\"NDCG Score on test years {test_years.tolist()} (n_estimators={n_estimators}): {ndcg:.4f}\")\n\n        # Show results\n        print(df[test_idx][[\"Year\", \"Name\", \"Rank\", f\"PredictedScore_{n_estimators}\", f\"PredictedRank_{n_estimators}\"]])\n\n    # Optionally, plot for the best n_estimators\n    best_n = max(ndcg_scores, key=ndcg_scores.get)\n    print(f\"\\nBest n_estimators based on NDCG: {best_n} (NDCG={ndcg_scores[best_n]:.4f})\")\n    # For plotting, copy the best predictions to 'PredictedRank' column\n    df.loc[test_idx, \"PredictedRank\"] = df.loc[test_idx, f\"PredictedRank_{best_n}\"]\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n\nif __name__ == \"__main__\":\n    main()\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755413803000,
+                "summaryData": "This code loads basketball player data, trains and evaluates XGBoost ranking models with different numbers of estimators to predict MVP rankings for recent years, computes NDCG scores for model performance, and visualizes prediction errors for the test years using bar plots.",
+                "lines": [
+                    1,
+                    135
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "MWQWij92WC70xrfnOjWo"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:56:43.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "import pandas as pd\nfrom xgboost import XGBRanker\nfrom sklearn.metrics import ndcg_score\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n\ndef load_data(path=\"data/merged_data.csv\"):\n    df = pd.read_csv(path)\n\n    # Features to use\n    feature_cols = [\n        \"PTS\",\n        \"AST\",\n        \"TRB\",\n        \"FG%\",\n        \"BPM\",\n        \"WS/48\",\n        \"TS%\",\n        \"VORP\",\n        \"WS\",\n        \"PER\",\n    ]\n    feature_cols = [\n        col for col in feature_cols if col in df.columns\n    ]  # only keep existing features\n    df = df.dropna(subset=feature_cols + [\"Rank\"])\n\n    # Sort by Year and Rank for consistency\n    df = df.sort_values(by=[\"Year\", \"Rank\"])\n\n    X = df[feature_cols]\n    y = df[\"Rank\"]\n    groups = df.groupby(\"Year\").size().to_numpy()\n\n    return X, y, groups, df\n\n\ndef evaluate_ndcg(y_true, y_pred, group_sizes):\n    scores = []\n    start = 0\n    for size in group_sizes:\n        true_ranks = y_true[start : start + size]\n        true_relevance = (max(true_ranks) + 1) - true_ranks\n        pred_scores = y_pred[start : start + size]\n        scores.append(ndcg_score([true_relevance], [pred_scores]))\n        start += size\n    return np.mean(scores)\n\n\ndef plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"PredictedRank\", palette=\"coolwarm\", dodge=True)\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n\ndef main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    n_estimators_list = [100, 1000, 2000]\n    ndcg_scores = {}\n\n    for n_estimators in n_estimators_list:\n        # Model\n        model = XGBRanker(\n            objective=\"rank:pairwise\",\n            learning_rate=0.1,\n            n_estimators=n_estimators,\n            max_depth=4,\n            random_state=42,\n        )\n\n        print(f\"\\nTraining XGBoostRanker with n_estimators={n_estimators}...\")\n        model.fit(X_train, y_train, group=train_groups)\n\n        # Predict, sort, and evaluate\n        y_pred = model.predict(X_test)\n        df.loc[test_idx, f\"PredictedScore_{n_estimators}\"] = y_pred\n        df.loc[test_idx, f\"PredictedRank_{n_estimators}\"] = (\n            df.loc[test_idx]\n            .groupby(\"Year\")[f\"PredictedScore_{n_estimators}\"]\n            .rank(ascending=False, method=\"first\")\n        )\n\n        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n        ndcg_scores[n_estimators] = ndcg\n        print(f\"NDCG Score on test years {test_years.tolist()} (n_estimators={n_estimators}): {ndcg:.4f}\")\n\n        # Show results\n        print(df[test_idx][[\"Year\", \"Name\", \"Rank\", f\"PredictedScore_{n_estimators}\", f\"PredictedRank_{n_estimators}\"]])\n\n    # Optionally, plot for the best n_estimators\n    best_n = max(ndcg_scores, key=ndcg_scores.get)\n    print(f\"\\nBest n_estimators based on NDCG: {best_n} (NDCG={ndcg_scores[best_n]:.4f})\")\n    # For plotting, copy the best predictions to 'PredictedRank' column\n    df.loc[test_idx, \"PredictedRank\"] = df.loc[test_idx, f\"PredictedRank_{best_n}\"]\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n\nif __name__ == \"__main__\":\n    main()\n",
+            "summary": "This code loads basketball player data, trains and evaluates XGBoost ranking models with different numbers of estimators to predict MVP rankings for recent years, computes NDCG scores for model performance, and visualizes prediction errors for the test years using bar plots."
+        },
+        "id": "TxHKC7a0x99nFp9Ha8Lm"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 10:56:52.000",
+        "source": "frontend",
+        "data": {},
+        "id": "SQP5Y562mJWENArm6l3q"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 10:56:53.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "import pandas as pd\nfrom xgboost import XGBRanker\nfrom sklearn.metrics import ndcg_score\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n\ndef load_data(path=\"data/merged_data.csv\"):\n    df = pd.read_csv(path)\n\n    # Features to use\n    feature_cols = [\n        \"PTS\",\n        \"AST\",\n        \"TRB\",\n        \"FG%\",\n        \"BPM\",\n        \"WS/48\",\n        \"TS%\",\n        \"VORP\",\n        \"WS\",\n        \"PER\",\n    ]\n    feature_cols = [\n        col for col in feature_cols if col in df.columns\n    ]  # only keep existing features\n    df = df.dropna(subset=feature_cols + [\"Rank\"])\n\n    # Sort by Year and Rank for consistency\n    df = df.sort_values(by=[\"Year\", \"Rank\"])\n\n    X = df[feature_cols]\n    y = df[\"Rank\"]\n    groups = df.groupby(\"Year\").size().to_numpy()\n\n    return X, y, groups, df\n\n\ndef evaluate_ndcg(y_true, y_pred, group_sizes):\n    scores = []\n    start = 0\n    for size in group_sizes:\n        true_ranks = y_true[start : start + size]\n        true_relevance = (max(true_ranks) + 1) - true_ranks\n        pred_scores = y_pred[start : start + size]\n        scores.append(ndcg_score([true_relevance], [pred_scores]))\n        start += size\n    return np.mean(scores)\n\n\ndef plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"PredictedRank\", palette=\"coolwarm\", dodge=True)\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n\ndef main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    n_estimators_list = [100, 1000, 2000]\n    ndcg_scores = {}\n\n    for n_estimators in n_estimators_list:\n        # Model\n        model = XGBRanker(\n            objective=\"rank:pairwise\",\n            learning_rate=0.1,\n            n_estimators=n_estimators,\n            max_depth=4,\n            random_state=42,\n        )\n\n        print(f\"\\nTraining XGBoostRanker with n_estimators={n_estimators}...\")\n        model.fit(X_train, y_train, group=train_groups)\n\n        # Predict, sort, and evaluate\n        y_pred = model.predict(X_test)\n        df.loc[test_idx, f\"PredictedScore_{n_estimators}\"] = y_pred\n        df.loc[test_idx, f\"PredictedRank_{n_estimators}\"] = (\n            df.loc[test_idx]\n            .groupby(\"Year\")[f\"PredictedScore_{n_estimators}\"]\n            .rank(ascending=False, method=\"first\")\n        )\n\n        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n        ndcg_scores[n_estimators] = ndcg\n        print(f\"NDCG Score on test years {test_years.tolist()} (n_estimators={n_estimators}): {ndcg:.4f}\")\n\n        # Show results\n        print(df[test_idx][[\"Year\", \"Name\", \"Rank\", f\"PredictedScore_{n_estimators}\", f\"PredictedRank_{n_estimators}\"]])\n\n    # Optionally, plot for the best n_estimators\n    best_n = max(ndcg_scores, key=ndcg_scores.get)\n    print(f\"\\nBest n_estimators based on NDCG: {best_n} (NDCG={ndcg_scores[best_n]:.4f})\")\n    # For plotting, copy the best predictions to 'PredictedRank' column\n    df.loc[test_idx, \"PredictedRank\"] = df.loc[test_idx, f\"PredictedRank_{best_n}\"]\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n\nif __name__ == \"__main__\":\n    main()\n",
+            "summary": "This code loads basketball player data, trains and evaluates XGBoost ranking models with different numbers of estimators to predict MVP rankings for recent years, computes NDCG scores to assess ranking quality, and visualizes prediction errors for the test years using bar plots."
+        },
+        "id": "5OpS4oRZYaQULy95l7jA"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 10:56:53.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "94e1fe2e-87f1-432c-855d-447963135df6",
+            "section_data": {
+                "metadata": {
+                    "id": "94e1fe2e-87f1-432c-855d-447963135df6",
+                    "fullPath": "/project/workspace/rank_model.py",
+                    "offset": 0,
+                    "filename": "rank_model.py",
+                    "originalCode": "import pandas as pd\nfrom xgboost import XGBRanker\nfrom sklearn.metrics import ndcg_score\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n\ndef load_data(path=\"data/merged_data.csv\"):\n    df = pd.read_csv(path)\n\n    # Features to use\n    feature_cols = [\n        \"PTS\",\n        \"AST\",\n        \"TRB\",\n        \"FG%\",\n        \"BPM\",\n        \"WS/48\",\n        \"TS%\",\n        \"VORP\",\n        \"WS\",\n        \"PER\",\n    ]\n    feature_cols = [\n        col for col in feature_cols if col in df.columns\n    ]  # only keep existing features\n    df = df.dropna(subset=feature_cols + [\"Rank\"])\n\n    # Sort by Year and Rank for consistency\n    df = df.sort_values(by=[\"Year\", \"Rank\"])\n\n    X = df[feature_cols]\n    y = df[\"Rank\"]\n    groups = df.groupby(\"Year\").size().to_numpy()\n\n    return X, y, groups, df\n\n\ndef evaluate_ndcg(y_true, y_pred, group_sizes):\n    scores = []\n    start = 0\n    for size in group_sizes:\n        true_ranks = y_true[start : start + size]\n        true_relevance = (max(true_ranks) + 1) - true_ranks\n        pred_scores = y_pred[start : start + size]\n        scores.append(ndcg_score([true_relevance], [pred_scores]))\n        start += size\n    return np.mean(scores)\n\n\ndef plot_ranking_predictions(df, year):\n    \"\"\"\n    Plot prediction error for a specific year.\n\n    Args:\n        df: DataFrame containing prediction results\n        year: Year to plot prediction errors for\n    \"\"\"\n    df[\"RankError\"] = df[\"PredictedRank\"] - df[\"Rank\"]\n    year_df = df[df[\"Year\"] == year].copy()\n    year_df.sort_values(\"Rank\", inplace=True)\n\n    plt.figure(figsize=(12, 6))\n    sns.barplot(x=\"Name\", y=\"RankError\", data=year_df, hue=\"PredictedRank\", palette=\"coolwarm\", dodge=True)\n    plt.axhline(0, color=\"black\", linestyle=\"--\")\n    plt.xticks(rotation=45, ha=\"right\")\n    plt.ylabel(\"Predicted Rank - True Rank\")\n    plt.title(f\"MVP Ranking Predictions ({year})\")\n    plt.tight_layout()\n    plt.savefig(f\"data/ranking_predictions_{year}.png\")\n\ndef main():\n    X, y, group, df = load_data()\n\n    # Train-test split on years\n    unique_years = df[\"Year\"].unique()\n    train_years, test_years = (\n        unique_years[:-2],  # train: 2015-2023\n        unique_years[-2:],  # test: 2024-2025\n    )\n\n    train_idx = df[\"Year\"].isin(train_years)\n    test_idx = df[\"Year\"].isin(test_years)\n\n    X_train, X_test = X[train_idx], X[test_idx]\n    y_train, y_test = y[train_idx], y[test_idx]\n\n    # Group sizes\n    train_groups = df[train_idx].groupby(\"Year\").size().to_numpy()\n    test_groups = df[test_idx].groupby(\"Year\").size().to_numpy()\n\n    n_estimators_list = [100, 1000, 2000]\n    ndcg_scores = {}\n\n    for n_estimators in n_estimators_list:\n        # Model\n        model = XGBRanker(\n            objective=\"rank:pairwise\",\n            learning_rate=0.1,\n            n_estimators=n_estimators,\n            max_depth=4,\n            random_state=42,\n        )\n\n        print(f\"\\nTraining XGBoostRanker with n_estimators={n_estimators}...\")\n        model.fit(X_train, y_train, group=train_groups)\n\n        # Predict, sort, and evaluate\n        y_pred = model.predict(X_test)\n        df.loc[test_idx, f\"PredictedScore_{n_estimators}\"] = y_pred\n        df.loc[test_idx, f\"PredictedRank_{n_estimators}\"] = (\n            df.loc[test_idx]\n            .groupby(\"Year\")[f\"PredictedScore_{n_estimators}\"]\n            .rank(ascending=False, method=\"first\")\n        )\n\n        ndcg = evaluate_ndcg(y_test.to_numpy(), y_pred, test_groups)\n        ndcg_scores[n_estimators] = ndcg\n        print(f\"NDCG Score on test years {test_years.tolist()} (n_estimators={n_estimators}): {ndcg:.4f}\")\n\n        # Show results\n        print(df[test_idx][[\"Year\", \"Name\", \"Rank\", f\"PredictedScore_{n_estimators}\", f\"PredictedRank_{n_estimators}\"]])\n\n    # Optionally, plot for the best n_estimators\n    best_n = max(ndcg_scores, key=ndcg_scores.get)\n    print(f\"\\nBest n_estimators based on NDCG: {best_n} (NDCG={ndcg_scores[best_n]:.4f})\")\n    # For plotting, copy the best predictions to 'PredictedRank' column\n    df.loc[test_idx, \"PredictedRank\"] = df.loc[test_idx, f\"PredictedRank_{best_n}\"]\n    plot_ranking_predictions(df, 2024)\n    plot_ranking_predictions(df, 2025)\n\nif __name__ == \"__main__\":\n    main()\n"
+                },
+                "title": "Untitled",
+                "createdAt": 1755413813000,
+                "summaryData": "This code loads basketball player data, trains and evaluates XGBoost ranking models with different numbers of estimators to predict MVP rankings for recent years, computes NDCG scores to assess ranking quality, and visualizes prediction errors for the test years using bar plots.",
+                "lines": [
+                    1,
+                    135
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "gXvE0zwfpLxBacog08rO"
+    },
+    {
+        "event": "click_summarize_code",
+        "timestamp": "2025-08-17 11:05:46.000",
+        "source": "frontend",
+        "data": {},
+        "id": "5otKwUh1B1DVqN6URF4A"
+    },
+    {
+        "event": "create_new_section",
+        "timestamp": "2025-08-17 11:05:48.000",
+        "source": "frontend",
+        "data": {
+            "section_id": "97f21b17-a1e8-4c9c-9ca7-d11bac868e61",
+            "section_data": {
+                "metadata": {
+                    "id": "97f21b17-a1e8-4c9c-9ca7-d11bac868e61",
+                    "fullPath": "/project/workspace/preprocess.py",
+                    "offset": 22,
+                    "filename": "preprocess.py",
+                    "originalCode": "def load_and_merge(mvp_path=\"data/mvp_votes.csv\", stats_path=\"data/season_stats.csv\"):\n    mvp_df = pd.read_csv(mvp_path)\n    stats_df = pd.read_csv(stats_path)\n\n    # Normalize names\n    mvp_df[\"Name\"] = mvp_df[\"Name\"].str.strip()\n    stats_df[\"Player\"] = stats_df[\"Player\"].str.strip()\n\n    # Merge on name + year\n    merged = pd.merge(\n        mvp_df,\n        stats_df,\n        left_on=[\"Name\", \"Year\"],\n        right_on=[\"Player\", \"Year\"],\n        how=\"left\",\n    )"
+                },
+                "title": "Untitled",
+                "createdAt": 1755414348000,
+                "summaryData": "The load_and_merge function reads MVP vote and season statistics CSV files, normalizes player names by stripping whitespace, and merges the two datasets on player name and year using a left join.",
+                "lines": [
+                    4,
+                    19
+                ],
+                "editPromptValue": ""
+            }
+        },
+        "id": "3YlYfo38YRrr5fP2Bk9J"
+    },
+    {
+        "event": "summarize_selected_code",
+        "timestamp": "2025-08-17 11:05:48.000",
+        "source": "backend",
+        "data": {
+            "selected_code": "def load_and_merge(mvp_path=\"data/mvp_votes.csv\", stats_path=\"data/season_stats.csv\"):\n    mvp_df = pd.read_csv(mvp_path)\n    stats_df = pd.read_csv(stats_path)\n\n    # Normalize names\n    mvp_df[\"Name\"] = mvp_df[\"Name\"].str.strip()\n    stats_df[\"Player\"] = stats_df[\"Player\"].str.strip()\n\n    # Merge on name + year\n    merged = pd.merge(\n        mvp_df,\n        stats_df,\n        left_on=[\"Name\", \"Year\"],\n        right_on=[\"Player\", \"Year\"],\n        how=\"left\",\n    )",
+            "summary": "The load_and_merge function reads MVP vote and season statistics CSV files, normalizes player names by stripping whitespace, and merges the two datasets on player name and year using a left join."
+        },
+        "id": "MqFq8RKK0evnYIEJPMuP"
+    }
+]
