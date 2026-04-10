@@ -1,9 +1,9 @@
 # NaturalEdit Replication Package
 
-This repository contains the replication package for the paper "NaturalEdit: Code Modification through Direct Interaction with Adaptive Natural Language Representation" ([arXiv:2510.04494](https://arxiv.org/abs/2510.04494)). Please note that the content already included in the paper appendix is not repeated here. The package is organized as follows (with key folders and files described):
+This repository contains the replication package for the paper "NaturalEdit: Code Modification through Direct Interaction with Adaptive Natural Language Representation" ([arXiv:2510.04494](https://arxiv.org/abs/2510.04494)). The extension is available in the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=sandwich-lab.naturaledit). Please note that the content already included in the paper appendix is not repeated here. The package is organized as follows (with key folders and files described):
 
 - **`naturaledit-extension/`**  
-  Source code for the NaturalEdit VS Code extension.
+  Source code for the NaturalEdit VS Code extension. Also available in the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=sandwich-lab.naturaledit).
 
 - **`baseline-extension/`**  
   Source code for the Baseline VS Code extension used in the user study.
